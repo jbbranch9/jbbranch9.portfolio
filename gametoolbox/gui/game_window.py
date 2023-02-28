@@ -35,11 +35,11 @@ class GameWindow(gui.Window):
             **window_parameter_kwargs
             )
         
-        self._window_event_loop()
+        self.__window_event_loop()
 
     # DO NOT override. Use game_event_loop instead,
-    # which is called once per _window_event_loop cycle.
-    def _window_event_loop(self):
+    # which is called once per __window_event_loop cycle.
+    def __window_event_loop(self):
         
         while True:
             event, values = self.read() 
@@ -48,7 +48,7 @@ class GameWindow(gui.Window):
                 break 
             
             if event in GameWindow.__RESTART_EVENTS:
-                self._restart()
+                self.__restart()
                 break
                 
             self.game_event_loop()
@@ -59,7 +59,7 @@ class GameWindow(gui.Window):
     def game_event_loop(self):
         pass
     
-    def _restart(self):
+    def __restart(self):
         self.close()
         return GameWindow()
         

@@ -11,10 +11,12 @@ from .game_window import GameWindow
 class DemoWindow(GameWindow):
 
     def sample_gui_object():
-        return gui.Text(
-            "This is a demo window.\nIt displays a single gui object like this text box.\nUse it for controlled testing debugging.")
-
-    def __init__(self, single_gui_object, window_parameters: dict = {'title': ''}):
+        new_object = gui.Text(
+            "This is a demo window.\nIt displays a single gui object like this text box.\nUse it for controlled testing debugging."
+        )
+        return new_object
+    
+    def __init__(self, single_gui_object, window_parameters: dict = GameWindow._GameWindow__default_window_parameters):
         window_parameters["layout"] = [[single_gui_object]]
 
         super().__init__(**window_parameters)
