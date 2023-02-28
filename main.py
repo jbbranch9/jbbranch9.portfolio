@@ -1,6 +1,6 @@
-from gametoolbox.gui import demo_window
+from gametoolbox.grid import grid
 
 def main():
-    demo_window.main()
+    grid.main()
 if __name__ == "__main__":
     main()
