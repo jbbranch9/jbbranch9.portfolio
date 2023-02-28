@@ -1,0 +1,41 @@
+gametoolbox is a Python module for making simple, grid-based games.
+
+What gametoolbox IS intended to be:
+a portfolio-building/learning project for me (jbbranch9)
+a framework for making (mostly) 2D grid-based games (which will be showcased in my portfolio along with this module)
+an engine with simple, GUI-object-based input controls (also supports basic mouse and keyboard inputs)
+a way to keep code DRY (grid-based games all tend to use similar architecture)
+
+What gametoolbox IS NOT intended to be:
+a general-purpose game engine
+for commercial game production
+capable of high-quality graphics (it's mostly going to be pre-rendered 2D bitmaps)
+
+DO NOT TRY TO REINVENT UNITY, UNREAL, GODOT, OR ANY OTHER GAME ENGINE!
+Remember that I am building a portfolio here, not a product.
+
+Undecided design questions:
+Will it support realtime gameplay? Or will it only support sequential/turn-based gameplay?
+Will it support non-rectangular grid patterns, such as isometric or hexagonal?
+To what extent will it support audio effects and music?
+To what extent will it support animation?
+    (it should probably be limited to stationary animated GIFs, if animation is supported at all)
+
+
+Planned games:
+chess
+checkers
+go
+gomoku
+connect-4
+tic-tac-toe
+minesweeper
+mazes
+flippy
+bricklayer
+
+Stretch-goal games:
+tetris
+sokobox
+manok
+picoperson
