@@ -1,6 +1,6 @@
-from gametoolbox.grid import grid
+from gametoolbox.matrix import matrix
 
 def main():
-    grid.main()
+    matrix.main()
 if __name__ == "__main__":
     main()
