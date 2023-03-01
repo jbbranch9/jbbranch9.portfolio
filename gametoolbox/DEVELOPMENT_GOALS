@@ -33,9 +33,12 @@ minesweeper
 mazes
 flippy
 bricklayer
+sudoku
+word search
+crossword
 
 Stretch-goal games:
-tetris
+tetris (if realtime play supported)
 sokobox
 manok
 picoperson
