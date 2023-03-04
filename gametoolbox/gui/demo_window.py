@@ -3,23 +3,26 @@ DemoWindow is a GameWindow that takes a single gui object as a parameter.
 It is used to display, test, and debug one object at a time, without having to run the entire program.
 """
 
-import PySimpleGUI as gui
+from PySimpleGUI import Text
 
-from .game_window import GameWindow
+from .game_window import GameWindow, default_window_parameters
 
 
 class DemoWindow(GameWindow):
 
     def sample_gui_object():
-        new_object = gui.Text(
-            "This is a demo window.\nIt displays a single gui object like this text box.\nUse it for controlled testing debugging."
+        new_object = Text(
+            "This is a demo window.\n"
+            "It displays a single gui object like this text box.\n"
+            "Use it for controlled testing/debugging."
         )
         return new_object
     
-    def __init__(self, single_gui_object, window_parameters: dict = GameWindow._GameWindow__default_window_parameters):
-        window_parameters["layout"] = [[single_gui_object]]
+    def __init__(self, single_gui_object):
+        window_params = default_window_parameters()
+        window_params.update({"layout": [[single_gui_object]]})
 
-        super().__init__(**window_parameters)
+        super().__init__(**window_params)
 
 
 class SampleDemoWindow(DemoWindow):

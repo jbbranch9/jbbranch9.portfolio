@@ -4,32 +4,41 @@ Users should only call __init__ function.
 
 """
 
-import PySimpleGUI as gui
+from PySimpleGUI import Window, WIN_CLOSED
 
 
-class GameWindow(gui.Window):
-    __EXIT_EVENTS = (gui.WIN_CLOSED, 'Exit', 'exit', 'EXIT', 'Escape:27', 'F5:116')
-    __RESTART_EVENTS = ('Restart', 'restart', 'RESTART', 'F2:113')
-    
-    # these parameters are passed to the parent class __init__ method, 
-    # override with game-specific params
-    __default_window_parameters = {
-        
-            'title': '',
-            'layout': [[]],
-            'return_keyboard_events': True,
-            'no_titlebar': False,
-            'grab_anywhere': True,
-            'finalize': True,
-            'resizable': True,
-            }
+def exit_events():
+    return WIN_CLOSED, 'Exit', 'exit', 'EXIT', 'Escape:27', 'F5:116'
+
+
+def restart_events():
+    return 'Restart', 'restart', 'RESTART', 'F2:113'
+
+
+# these parameters are passed to the parent class __init__ method,
+# override with game-specific params
+def default_window_parameters():
+    return {
+        'title': '',
+        'layout': [[]],
+        'return_keyboard_events': True,
+        'no_titlebar': False,
+        'grab_anywhere': True,
+        'finalize': True,
+        'resizable': True,
+        }
+
+
+class GameWindow(Window):
+    __EXIT_EVENTS = exit_events()
+    __RESTART_EVENTS = restart_events()
     
     def __init__(self, *args, **kwargs):
         
         if kwargs:
             window_parameter_kwargs = kwargs
         else:
-            window_parameter_kwargs = GameWindow.__default_window_parameters
+            window_parameter_kwargs = default_window_parameters()
 
         super().__init__(
             **window_parameter_kwargs
@@ -62,6 +71,9 @@ class GameWindow(gui.Window):
     def __restart(self):
         self.close()
         return GameWindow()
+
+    def get_default_parameters():
+        return dict(GameWindow.__default_window_parameters)
         
 
 def main():

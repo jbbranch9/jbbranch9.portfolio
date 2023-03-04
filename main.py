@@ -1,9 +1,11 @@
-from gametoolbox.matrix.matrix import Matrix2D
-from gametoolbox.maze.draw_maze import DrawMaze
+from gametoolbox.gui.grid import ButtonGrid, ImageGrid
+from gametoolbox.gui.demo_window import DemoWindow
 
 def main():
-    mtx = Matrix2D(x_dimension=3, y_dimension=4)
-    print(iter(mtx))
+    btn_args = {
+
+    }
+    DemoWindow(single_gui_object=ButtonGrid(num_rows=4, num_columns=5, button_args=btn_args).get_frame())
 
 
 
