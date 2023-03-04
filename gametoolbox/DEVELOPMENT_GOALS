@@ -1,44 +1,50 @@
-gametoolbox is a Python module for making simple, grid-based games.
+gametoolbox is a Python module for making simple 2D games.
 
 What gametoolbox IS intended to be:
 a portfolio-building/learning project for me (jbbranch9)
 a framework for making (mostly) 2D grid-based games (which will be showcased in my portfolio along with this module)
-an engine with simple, GUI-object-based input controls (also supports basic mouse and keyboard inputs)
-a way to keep code DRY (grid-based games all tend to use similar architecture)
+an engine with simple, GUI-object-based player input controls (also supports basic mouse and keyboard inputs)
+a way to keep code DRY (2D grid-based games all tend to use similar architecture)
 
 What gametoolbox IS NOT intended to be:
 a general-purpose game engine
-for commercial game production
-capable of high-quality graphics (it's mostly going to be pre-rendered 2D bitmaps)
+used for commercial game production
+capable of high-quality graphics (it's mostly going to be pre-rendered 2D bitmaps and ASCII/Unicode art)
 
 DO NOT TRY TO REINVENT UNITY, UNREAL, GODOT, OR ANY OTHER GAME ENGINE!
-Remember that I am building a portfolio here, not a product.
+(remember that I am building a portfolio here, not a product)
 
 Undecided design questions:
 Will it support realtime gameplay? Or will it only support sequential/turn-based gameplay?
 Will it support non-rectangular grid patterns, such as isometric or hexagonal?
 To what extent will it support audio effects and music?
-To what extent will it support animation?
-    (it should probably be limited to stationary animated GIFs, if animation is supported at all)
+To what extent will it support animation and visual effects?
+    (it should probably be limited to stationary, animated GIFs, if animation is supported at all)
 
 
 Planned games:
-chess
-checkers
-go
-gomoku
+
+    easy:
 connect-4
 tic-tac-toe
+word search
+
+    intermediate:
+chess
+checkers
 minesweeper
 mazes
 flippy
 bricklayer
-sudoku
-word search
-crossword
 
-Stretch-goal games:
+    hard:
+sudoku
+crossword
+go
+gomoku
+
+    stretch-goal games:
 tetris (if realtime play supported)
 sokobox
-manok
+manok (if non-square grids supported)
 picoperson
