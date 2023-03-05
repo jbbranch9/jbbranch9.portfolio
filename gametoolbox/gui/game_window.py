@@ -32,6 +32,8 @@ def default_window_parameters():
 class GameWindow(Window):
     __EXIT_EVENTS = exit_events()
     __RESTART_EVENTS = restart_events()
+
+    __print_events_enabled = True
     
     def __init__(self, *args, **kwargs):
         
@@ -51,7 +53,9 @@ class GameWindow(Window):
     def __window_event_loop(self):
         
         while True:
-            event, values = self.read() 
+            event, values = self.read()
+            if self.__print_events_enabled:
+                self.__print_event(event, values)
             
             if event in GameWindow.__EXIT_EVENTS: 
                 break 
@@ -72,8 +76,17 @@ class GameWindow(Window):
         self.close()
         return GameWindow()
 
-    def get_default_parameters():
-        return dict(GameWindow.__default_window_parameters)
+    def __print_event(self, event, values):
+        print("event:")
+        print(event)
+        print("values:")
+        print(values)
+
+    def toggle_print_event(self, enable: bool = not __print_events_enabled):
+        self.__print_events_enabled = enable
+
+    def get_default_parameters(self):
+        return dict(self.__default_window_parameters)
         
 
 def main():
