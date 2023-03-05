@@ -3,9 +3,16 @@ from PySimpleGUI import Frame, Button
 
 class Grid:
 
-    # Abstract class; use inherited classes only.
-    def __init__(self, num_rows: int, num_columns: int, cell_constructor, cell_args: dict):
+    _default_dimension = 8
 
+    # Abstract class; use inherited classes only.
+    def __init__(
+            self,
+            num_rows: int,
+            num_columns: int,
+            cell_constructor,
+            cell_args: dict
+    ):
         self.__layout = []
 
         self.__activated = False
@@ -34,28 +41,48 @@ class Grid:
             return self.__layout
 
     def get_frame(self):
-        return Frame(title="", layout=self.get_layout())
+        return Frame(title="", layout=self.get_layout(), border_width=0)
 
 
 class ButtonGrid(Grid):
-    def __init__(self, num_rows: int, num_columns: int, button_args: dict):
-        cell_args = {
-            # "button_specific_args": "wip"
-        }
-        cell_args.update(button_args)
+
+    __default_button_args = {
+        "size": (3, 1),
+        "font": "consolas",
+        "pad": (1, 1),
+    }
+
+    def __init__(
+            self,
+            num_rows: int = Grid._default_dimension,
+            num_columns: int = Grid._default_dimension,
+            cell_args=None,
+    ):
+        if cell_args is None:
+            cell_args = self.__default_button_args
+
         super().__init__(num_rows, num_columns, cell_constructor=Button, cell_args=cell_args)
 
 
 class ImageGrid(Grid):
-    def __init__(self, num_rows: int, num_columns: int, image_args: dict):
 
-        assert "enable_events" in image_args.keys()  # enable_events is a required key
-        assert type(image_args["enable_events"]) == bool
+    __default_image_args = {
+        "enable_events": True,
+    }
 
-        cell_args = {
-            # "button_specific_args": "wip"
-        }
-        cell_args.update(image_args)
+    def __init__(
+            self,
+            num_rows: int = Grid._default_dimension,
+            num_columns: int = Grid._default_dimension,
+            cell_args=None,
+    ):
+
+        if cell_args is None:
+            cell_args = self.__default_image_args
+
+        assert "enable_events" in cell_args.keys()  # enable_events is a required key
+        assert type(cell_args["enable_events"]) == bool
+
         super().__init__(num_rows, num_columns, cell_constructor=Button, cell_args=cell_args)
 
 
