@@ -17,11 +17,17 @@ class Grid:
 
         self.__activated = False
 
-        for _r in range(num_rows):
+        # the GUI returns this key whenever an input event originates from the cell at these coordinates
+        def generate_key(row_ix: int, column_ix: int):
+            return f"{row_ix}:{column_ix}"
+
+        for r in range(num_rows):
             row = []
             self.__layout.append(row)
-            for _c in range(num_columns):
+            for c in range(num_columns):
+                cell_args.update({"key": generate_key(r, c)})
                 row.append(cell_constructor(**cell_args))
+        return
 
     """
     One of the constraints of the PySimpleGUI library is that 
@@ -31,7 +37,8 @@ class Grid:
     Instantiate a new Grid object instead.
     """
 
-    __ReusedGuiElementException = Exception("This grid's layout is already in use. "
+    __ReusedGuiElementException = Exception("This grid's layout and its GUI elements are already in use. "
+                                            "PySimpleGUI does not allow reused elements."
                                             "Instantiate a new Grid object instead.")
 
     def get_layout(self):
