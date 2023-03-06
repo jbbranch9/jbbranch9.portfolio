@@ -1,4 +1,4 @@
-from PySimpleGUI import Frame, Button
+from PySimpleGUI import Frame, Button, Image, Text
 
 
 class Grid:
@@ -57,37 +57,54 @@ class Grid:
         pass
 
 
+"""
+GridCell (and its inherited classes) are factories. 
+They build constructor functions for the GUI elements that make up a Grid, like Button(), Image(), or Text().
+The most important method is 'get_cell_constructor', which takes as its only parameter: 
+    a dictionary containing all kwargs for that element's constructor function
+It returns (essentially) a modified constructor function for that element, but with new parameters: row_ix, column_ix
+This means that the Grid doesn't need to know anything about the cells it's making, other than where it's putting them. 
+    And it allows the cells to know their coordinates within the Grid, but nothing else (unless added to metadata)
+"""
+
+
 class GridCell:
+    __default_kwargs = {}
+    
     # the GUI returns this key whenever an input event originates from the cell at these coordinates
-    def generate_key(self, row_ix: int, column_ix: int):
+    def _generate_key(self, row_ix: int, column_ix: int):
         return f"{row_ix}:{column_ix}"
 
-    def _build_cell_constructor(self, constructor_type, constructor_args):
+    def _prepare_cell_constructor(self, constructor_type, constructor_kwargs):
         def enclosed_constructor(row_ix: int, column_ix: int):
-            gui_event_key = self.generate_key(row_ix, column_ix)
-            return constructor_type(**constructor_args, key=gui_event_key)
+            gui_event_key = self._generate_key(row_ix, column_ix)
+            return constructor_type(**constructor_kwargs, key=gui_event_key)
 
         return enclosed_constructor
 
+    # overload this method in all inherited classes
+    def get_cell_constructor(self, constructor_kwargs=None):
+        pass
+
 
 class ButtonCell(GridCell):
-    __default_args = {
+    __default_kwargs = {
         "size": (3, 1),
         "font": "consolas",
         "pad": (1, 1),
     }
+    
+    def get_cell_constructor(self, constructor_kwargs=None):
 
-    def get_cell_constructor(self, constructor_args=None):
+        if constructor_kwargs is None:
+            constructor_kwargs = {}
 
-        if constructor_args is None:
-            constructor_args = {}
+        args = self.__default_kwargs
+        args.update(constructor_kwargs)
 
-        args = self.__default_args
-        args.update(constructor_args)
-
-        cell_constructor = super()._build_cell_constructor(
+        cell_constructor = super()._prepare_cell_constructor(
             constructor_type=Button,
-            constructor_args=args,
+            constructor_kwargs=args,
         )
 
         print(type(cell_constructor))
@@ -102,33 +119,27 @@ class ButtonGrid(Grid):
             self,
             num_rows: int = Grid._default_dimension,
             num_columns: int = Grid._default_dimension,
-            button_constructor_args: dict = None,
+            button_constructor_kwargs: dict = None,
     ):
-        constructor_func = ButtonCell().get_cell_constructor(button_constructor_args)
+        constructor_func = ButtonCell().get_cell_constructor(button_constructor_kwargs)
 
         super().__init__(num_rows, num_columns, cell_constructor=constructor_func)
 
 
+class ImageCell(GridCell):
+    pass
+
+
 class ImageGrid(Grid):
+    pass
 
-    __default_image_args = {
-        "enable_events": True,
-    }
 
-    def __init__(
-            self,
-            num_rows: int = Grid._default_dimension,
-            num_columns: int = Grid._default_dimension,
-            cell_args=None,
-    ):
+class TextCell(GridCell):
+    pass
 
-        if cell_args is None:
-            cell_args = self.__default_image_args
 
-        assert "enable_events" in cell_args.keys()  # enable_events is a required key
-        assert type(cell_args["enable_events"]) == bool
-
-        super().__init__(num_rows, num_columns, cell_constructor=Button, cell_args=cell_args)
+class TextGrid(Grid):
+    pass
 
 
 def main():
