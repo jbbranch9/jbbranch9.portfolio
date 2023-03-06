@@ -51,8 +51,9 @@ class GameWindow(Window):
         
         self.__window_event_loop()
 
-    # DO NOT override. Use game_event_loop instead,
-    # which is called once per __window_event_loop cycle.
+    # DO NOT overload '__window_event_loop'
+    # For gameplay loops, use 'game_event_loop' instead,
+    # which is called once per '__window_event_loop' cycle.
     def __window_event_loop(self):
         
         while True:
@@ -67,12 +68,12 @@ class GameWindow(Window):
                 self.__restart()
                 break
                 
-            self.game_event_loop()
+            self.game_event_loop(event, values)
 
         self.close()  # This is a redundant failsafe to ensure the window closes.
 
     # override this method for each game's specific loop(s).
-    def game_event_loop(self):
+    def game_event_loop(self, event, values):
         pass
     
     def __restart(self):
