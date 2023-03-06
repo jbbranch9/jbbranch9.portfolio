@@ -41,7 +41,7 @@ class GameWindow(Window):
         if kwargs:
             window_parameter_kwargs = kwargs
         else:
-            window_parameter_kwargs = default_window_parameters()
+            window_parameter_kwargs = self.default_window_parameters()
 
         super().__init__(
             **window_parameter_kwargs
