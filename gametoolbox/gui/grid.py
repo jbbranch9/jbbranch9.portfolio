@@ -11,22 +11,19 @@ class Grid:
             num_rows: int,
             num_columns: int,
             cell_constructor,
-            cell_args: dict
     ):
         self.__layout = []
 
+        # this is set to True after the first finalize() or read() call. it's main purpose to avoid gui element reuse
         self.__activated = False
-
-        # the GUI returns this key whenever an input event originates from the cell at these coordinates
-        def generate_key(row_ix: int, column_ix: int):
-            return f"{row_ix}:{column_ix}"
 
         for r in range(num_rows):
             row = []
             self.__layout.append(row)
             for c in range(num_columns):
-                cell_args.update({"key": generate_key(r, c)})
-                row.append(cell_constructor(**cell_args))
+                cell = cell_constructor(r, c)
+                print(cell)
+                row.append(cell)
         return
 
     """
@@ -50,25 +47,66 @@ class Grid:
     def get_frame(self):
         return Frame(title="", layout=self.get_layout(), border_width=0)
 
+    """
+    This is automatically* called after the parent GameWindow calls finalize() or read() for the first time.
+    It is needed because some GUI object methods are unavailable until post-finalization, 
+    and calling each of these methods individually is tedious, and makes the code messy.
+    Override this method in inherited classes, and put all post-finalization method calls inside of it.
+    """
+    def post_finalization(self):
+        pass
 
-class ButtonGrid(Grid):
 
-    __default_button_args = {
+class GridCell:
+    # the GUI returns this key whenever an input event originates from the cell at these coordinates
+    def generate_key(self, row_ix: int, column_ix: int):
+        return f"{row_ix}:{column_ix}"
+
+    def _build_cell_constructor(self, constructor_type, constructor_args):
+        def enclosed_constructor(row_ix: int, column_ix: int):
+            gui_event_key = self.generate_key(row_ix, column_ix)
+            return constructor_type(**constructor_args, key=gui_event_key)
+
+        return enclosed_constructor
+
+
+class ButtonCell(GridCell):
+    __default_args = {
         "size": (3, 1),
         "font": "consolas",
         "pad": (1, 1),
     }
 
+    def get_cell_constructor(self, constructor_args=None):
+
+        if constructor_args is None:
+            constructor_args = {}
+
+        args = self.__default_args
+        args.update(constructor_args)
+
+        cell_constructor = super()._build_cell_constructor(
+            constructor_type=Button,
+            constructor_args=args,
+        )
+
+        print(type(cell_constructor))
+
+        return cell_constructor
+
+
+
+class ButtonGrid(Grid):
+
     def __init__(
             self,
             num_rows: int = Grid._default_dimension,
             num_columns: int = Grid._default_dimension,
-            cell_args=None,
+            button_constructor_args: dict = None,
     ):
-        if cell_args is None:
-            cell_args = self.__default_button_args
+        constructor_func = ButtonCell().get_cell_constructor(button_constructor_args)
 
-        super().__init__(num_rows, num_columns, cell_constructor=Button, cell_args=cell_args)
+        super().__init__(num_rows, num_columns, cell_constructor=constructor_func)
 
 
 class ImageGrid(Grid):

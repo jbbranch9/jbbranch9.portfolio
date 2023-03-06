@@ -4,8 +4,9 @@ It is used to display, test, and debug one object at a time, without having to r
 """
 
 from PySimpleGUI import Text
+from PySimpleGUI import Element as GuiElement
 
-from .game_window import GameWindow, default_window_parameters
+from .game_window import GameWindow
 
 
 class DemoWindow(GameWindow):
@@ -18,8 +19,8 @@ class DemoWindow(GameWindow):
         )
         return new_object
     
-    def __init__(self, single_gui_object):
-        window_params = default_window_parameters()
+    def __init__(self, single_gui_object: GuiElement):
+        window_params = GameWindow.default_window_parameters()
         window_params.update({"layout": [[single_gui_object]]})
 
         super().__init__(**window_params)

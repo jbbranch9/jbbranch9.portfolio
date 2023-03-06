@@ -1,6 +1,5 @@
 """
 This is the parent class for all game windows.
-Users should only call __init__ function.
 
 """
 
@@ -15,18 +14,7 @@ def restart_events():
     return 'Restart', 'restart', 'RESTART', 'F2:113'
 
 
-# these parameters are passed to the parent class __init__ method,
-# override with game-specific params
-def default_window_parameters():
-    return {
-        'title': '',
-        'layout': [[]],
-        'return_keyboard_events': True,
-        'no_titlebar': False,
-        'grab_anywhere': True,
-        'finalize': True,
-        'resizable': True,
-        }
+
 
 
 class GameWindow(Window):
@@ -34,8 +22,21 @@ class GameWindow(Window):
     __RESTART_EVENTS = restart_events()
 
     __print_events_enabled = True
+
+    # these parameters are passed to the parent class __init__ method,
+    # override with game-specific params
+    def default_window_parameters():
+        return {
+            'title': '',
+            'layout': [[]],
+            'return_keyboard_events': True,
+            'no_titlebar': False,
+            'grab_anywhere': True,
+            'finalize': True,
+            'resizable': True,
+        }
     
-    def __init__(self, *args, **kwargs):
+    def __init__(self, **kwargs):
         
         if kwargs:
             window_parameter_kwargs = kwargs
@@ -45,6 +46,8 @@ class GameWindow(Window):
         super().__init__(
             **window_parameter_kwargs
             )
+
+        self.finalize()
         
         self.__window_event_loop()
 
@@ -86,7 +89,7 @@ class GameWindow(Window):
         self.__print_events_enabled = enable
 
     def get_default_parameters(self):
-        return dict(self.__default_window_parameters)
+        return dict(self.default_window_parameters)
         
 
 def main():
