@@ -22,7 +22,6 @@ class Grid:
             self.__layout.append(row)
             for c in range(num_columns):
                 cell = cell_constructor(r, c)
-                print(cell)
                 row.append(cell)
         return
 
@@ -107,7 +106,6 @@ class ButtonCell(GridCell):
             constructor_kwargs=args,
         )
 
-        print(type(cell_constructor))
 
         return cell_constructor
 

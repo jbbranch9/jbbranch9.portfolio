@@ -20,7 +20,7 @@ class DemoWindow(GameWindow):
         return new_object
     
     def __init__(self, single_gui_object: GuiElement):
-        window_params = GameWindow.default_window_parameters()
+        window_params = self._default_parameters
         window_params.update({"layout": [[single_gui_object]]})
 
         super().__init__(**window_params)
