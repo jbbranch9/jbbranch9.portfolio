@@ -1,5 +1,5 @@
 import logging
-from gametoolbox.gui.grid import ButtonGrid
+from gametoolbox.board.board import Checkerboard
 from gametoolbox.gui.demo_window import DemoWindow
 
 
@@ -8,8 +8,13 @@ def main():
 
     logging.basicConfig(level=logging.DEBUG)
 
-    demo = ButtonGrid(4, 3)
-    DemoWindow(single_gui_object=demo.get_frame())
+    demo = Checkerboard()
+
+    post_final = demo.get_post_finalization_array()
+
+    DemoWindow(
+        single_gui_object=demo.get_frame(),
+        post_finalization_array=post_final)
 
 
 if __name__ == "__main__":

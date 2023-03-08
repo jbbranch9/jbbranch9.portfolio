@@ -1,20 +1,24 @@
-from ..gui.grid import ButtonGrid
-
+from ..gui.grid import GridBase, ButtonGrid
+from ..color.palettes import palettes
 
 class Board(ButtonGrid):
 
-    def __init__(self):
-        super().__init__()
+    def __init__(
+            self,
+            num_rows: int = GridBase._default_dimension,
+            num_columns: int = GridBase._default_dimension):
+
+        super().__init__(num_rows, num_columns)
 
     # recolors buttons into a checkerboard pattern
-    def __checkerize(self, light_color: str, dark_color: str, reverse_colors: bool = False):
+    def checkerize(self, light_color: str, dark_color: str, reverse_colors: bool = False):
         def even(x: int):
             return x % 2 == 0
 
         def odd(x: int):
             return not even(x)
 
-        def dark_tile(row_ix: int, col_ix: int):
+        def light_tile(row_ix: int, col_ix: int):
             r, c = row_ix, col_ix
             E, O = even, odd
             return (E(r) and E(c)) or (O(r) and (O(c)))
@@ -22,21 +26,30 @@ class Board(ButtonGrid):
         for r, row in enumerate(self.get_layout()):
             for c, col in enumerate(row):
                 new_color = ""
-                if dark_tile(r, c):
-                    new_color = dark_color
-                else:
+                if light_tile(r, c):
                     new_color = light_color
+                else:
+                    new_color = dark_color
                 col.update(button_color=new_color)
         return
 
 
 class Checkerboard(Board):
-    def __init__(self):
-        super().__init__()
+    def __init__(
+            self,
+            num_rows: int = GridBase._default_dimension,
+            num_columns: int = GridBase._default_dimension):
+
+        super().__init__(num_rows, num_columns)
 
     # override
-    def post_finalization(self):
-        self.__checkerize(light_color="#FFFFFF", dark_color="#000000")
+    def get_post_finalization_array(self) -> list:
+        def enclosed_func():
+
+            self.checkerize(**palettes["board"]["chess"]["green-white"])
+        pf_array = [enclosed_func, ]
+
+        return pf_array
 
 
 

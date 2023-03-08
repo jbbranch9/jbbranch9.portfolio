@@ -19,11 +19,18 @@ class DemoWindow(GameWindow):
         )
         return new_object
     
-    def __init__(self, single_gui_object: GuiElement):
+    def __init__(self, single_gui_object: GuiElement, post_finalization_array: list = None):
+
+        if post_finalization_array is None:
+            post_finalization_array = [single_gui_object]
+
         window_params = self._default_parameters
         window_params.update({"layout": [[single_gui_object]]})
 
-        super().__init__(**window_params)
+        super().__init__(
+            post_finalization_array=post_finalization_array,
+            **window_params,
+        )
 
 
 class SampleDemoWindow(DemoWindow):

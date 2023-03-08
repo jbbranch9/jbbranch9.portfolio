@@ -1,15 +1,19 @@
 """
 GridCell (and its inherited classes) are factories.
-They build constructor functions for the GUI elements that make up a GridBase, like Button(), Image(), or Text().
+They build constructor functions for the GUI elements that make up a GridBase,
+    like Button(), Image(), or Text().
 The most important method is 'get_cell_constructor', which takes as its only parameter:
     a dictionary containing all kwargs for that element's constructor function
-It returns (essentially) a modified constructor function for that element, but with new parameters: row_ix, column_ix
-This means that the GridBase doesn't need to know anything about the cells it's making, other than where it's putting them.
-    And it allows the cells to know their coordinates within the GridBase, but nothing else (unless added to metadata)
+It returns (essentially) a modified constructor function for that element,
+    but with new parameters: row_ix, column_ix
+This means that the GridBase doesn't need to know anything about the cells it's making,
+    other than where it's putting them.
+And it allows the cells to know their coordinates within the GridBase,
+    but nothing else (unless added to metadata)
 """
 
-
 from PySimpleGUI import Button, Image, Text
+
 
 class GridCell:
     _default_kwargs = {}
@@ -17,11 +21,14 @@ class GridCell:
     def __init__(self, constructor_type):
         self.__constructor_type = constructor_type
 
-    def get_cell_constructor(self, constructor_kwargs: dict = None):
+    def get_cell_constructor(self, constructor_kwargs: dict = None, ignore_default_kwargs: bool = False):
         if constructor_kwargs is None:
-            constructor_kwargs = self.get_default_kwargs()
+            constructor_kwargs = self._default_kwargs
         else:
-            default = self.get_default_kwargs()
+            if ignore_default_kwargs:
+                default = {}
+            else:
+                default = self._default_kwargs
             default.update(constructor_kwargs)
             constructor_kwargs = default
 
@@ -36,16 +43,12 @@ class GridCell:
 
         return enclosed_constructor
 
-    def get_default_kwargs(self):
-        return dict(self._default_kwargs)
-
 
 class ButtonCell(GridCell):
     _default_kwargs = {
         "size": (3, 1),
-        "font": "consolas",
-        "pad": (1, 1),
-        "button_text": "!",
+        "font": ("consolas", 14),
+        "pad": (0, 0),
     }
 
     def __init__(self):

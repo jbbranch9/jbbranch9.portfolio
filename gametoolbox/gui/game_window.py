@@ -15,41 +15,43 @@ def restart_events():
     return 'Restart', 'restart', 'RESTART', 'F2:113'
 
 
-# these parameters are passed to the parent class __init__ method,
-# override with game-specific params as needed
+
 def default_window_parameters():
-    return {
-        'title': '',
-        'layout': [[]],
-        'return_keyboard_events': True,
-        'no_titlebar': False,
-        'grab_anywhere': True,
-        'finalize': True,
-        'resizable': True,
-    }
+    return
 
 
 class GameWindow(Window):
     __EXIT_EVENTS = exit_events()
     __RESTART_EVENTS = restart_events()
 
-    _default_parameters = default_window_parameters()
-
-
+    # these parameters are passed to the parent class __init__ method,
+    # override with game-specific params as needed
+    _default_parameters = {
+        'title': '',
+        "layout": [[]],
+        'return_keyboard_events': True,
+        'no_titlebar': False,
+        'grab_anywhere': True,
+        'finalize': True,
+        'resizable': True,
+    }
     
-    def __init__(self, **kwargs):
-        
+    def __init__(self, layout: list, post_finalization_array: list = None, **kwargs):
+
         if kwargs:
             window_parameter_kwargs = kwargs
         else:
             window_parameter_kwargs = self._default_parameters
+
+        window_parameter_kwargs["layout"] = layout
 
         super().__init__(
             **window_parameter_kwargs
             )
 
         self.finalize()
-        
+        if post_finalization_array:
+            self.__post_finalization(post_finalization_array)
         self.__window_event_loop()
 
     # DO NOT overload '__window_event_loop'
@@ -89,8 +91,9 @@ class GameWindow(Window):
         self.close()
         return GameWindow()
 
-    def get_default_parameters(self):
-        return dict(self._default_parameters)
+    def __post_finalization(self, post_finalization_array:list):
+        for post_final_function in post_finalization_array:
+            post_final_function()
         
 
 def main():
