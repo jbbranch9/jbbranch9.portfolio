@@ -46,7 +46,7 @@ class Checkerboard(Board):
     def get_post_finalization_array(self) -> list:
         def enclosed_func():
 
-            self.checkerize(**palettes["board"]["chess"]["green-white"])
+            self.checkerize(**palettes["board"]["chess"]["wooden"])
         pf_array = [enclosed_func, ]
 
         return pf_array
