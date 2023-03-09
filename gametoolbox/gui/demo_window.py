@@ -22,7 +22,7 @@ class DemoWindow(GameWindow):
     def __init__(self, single_gui_object: GuiElement, post_finalization_array: list = None):
 
         if post_finalization_array is None:
-            post_finalization_array = [single_gui_object]
+            post_finalization_array = []
 
         window_params = self._default_parameters
         window_params.update({"layout": [[single_gui_object]]})

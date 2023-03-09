@@ -15,7 +15,6 @@ def restart_events():
     return 'Restart', 'restart', 'RESTART', 'F2:113'
 
 
-
 def default_window_parameters():
     return
 
@@ -36,14 +35,13 @@ class GameWindow(Window):
         'resizable': True,
     }
     
-    def __init__(self, layout: list, post_finalization_array: list = None, **kwargs):
+    def __init__(self, post_finalization_array: list = None, layout: list = None, **window_parameter_kwargs):
 
-        if kwargs:
-            window_parameter_kwargs = kwargs
-        else:
+        if not window_parameter_kwargs:
             window_parameter_kwargs = self._default_parameters
 
-        window_parameter_kwargs["layout"] = layout
+        if layout:
+            window_parameter_kwargs["layout"] = layout
 
         super().__init__(
             **window_parameter_kwargs
@@ -75,7 +73,6 @@ class GameWindow(Window):
             # '__window_event_loop' should repeat after this loop
             repeat_loop = self.game_event_loop(event, values)
 
-
         self.close()  # This is a redundant failsafe to ensure the window closes.
 
     """
@@ -91,7 +88,7 @@ class GameWindow(Window):
         self.close()
         return GameWindow()
 
-    def __post_finalization(self, post_finalization_array:list):
+    def __post_finalization(self, post_finalization_array: list):
         for post_final_function in post_finalization_array:
             post_final_function()
         

@@ -3,13 +3,6 @@ from ..color.palettes import palettes
 
 class Board(ButtonGrid):
 
-    def __init__(
-            self,
-            num_rows: int = GridBase._default_dimension,
-            num_columns: int = GridBase._default_dimension):
-
-        super().__init__(num_rows, num_columns)
-
     # recolors buttons into a checkerboard pattern
     def checkerize(self, light_color: str, dark_color: str, reverse_colors: bool = False):
         def even(x: int):
@@ -33,22 +26,27 @@ class Board(ButtonGrid):
                 col.update(button_color=new_color)
         return
 
+    # overload this function in inherited class
+    def get_post_finalization_array(self) -> list:
+        def enclosed_func():
+            pass
+        pf_array = [enclosed_func, ]
+        return pf_array
+
 
 class Checkerboard(Board):
     def __init__(
             self,
-            num_rows: int = GridBase._default_dimension,
-            num_columns: int = GridBase._default_dimension):
+            constructor_kwargs: dict = None,
+            color_palette: str = "wooden",
+    ):
+        self.color_palette = color_palette
+        super().__init__(num_rows=8, num_columns=8, constructor_kwargs=constructor_kwargs)
 
-        super().__init__(num_rows, num_columns)
-
-    # override
     def get_post_finalization_array(self) -> list:
-        def enclosed_func():
-
-            self.checkerize(**palettes["board"]["chess"]["wooden"])
-        pf_array = [enclosed_func, ]
-
+        def checkerize_enclosed():
+            self.checkerize(**palettes["board"]["chess"][self.color_palette])
+        pf_array = [checkerize_enclosed, ]
         return pf_array
 
 

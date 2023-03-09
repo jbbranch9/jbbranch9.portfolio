@@ -21,6 +21,9 @@ class GridCell:
     def __init__(self, constructor_type):
         self.__constructor_type = constructor_type
 
+    def get_default_kwargs(self):
+        return dict(self._default_kwargs)
+
     def get_cell_constructor(self, constructor_kwargs: dict = None, ignore_default_kwargs: bool = False):
         if constructor_kwargs is None:
             constructor_kwargs = self._default_kwargs
