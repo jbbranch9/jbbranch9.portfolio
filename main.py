@@ -10,11 +10,11 @@ def main():
 
     logging.basicConfig(level=logging.DEBUG)
 
-    DemoWindow(
-        single_gui_object=TurnIndicator(font=()),
-    )
+    # DemoWindow(
+    #     single_gui_object=TurnIndicator(font=()),
+    # )
 
-    # TicTacToeGame()
+    TicTacToeGame()
 
     # demo = Checkerboard()
     #
