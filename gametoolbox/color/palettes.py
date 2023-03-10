@@ -83,11 +83,11 @@ palettes = {
                 "dark_color": colors["black"],
                 },
             "black-white-soft": {
-                "light_color": colors["gray_silver"],
+                "light_color": colors["silver"],
                 "dark_color": colors["gray_40"],
                 },
             "green-white": {
-                "light_color": colors["gray_timberwolf"],
+                "light_color": colors["wolf_gray"],
                 "dark_color": colors["green_brunswick"],
                 },
             "wooden": {

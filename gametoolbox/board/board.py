@@ -1,10 +1,15 @@
-from ..gui.grid import GridBase, ButtonGrid
+from ..gui.grid import ButtonGrid
 from ..color.palettes import palettes
+
 
 class Board(ButtonGrid):
 
     # recolors buttons into a checkerboard pattern
-    def checkerize(self, light_color: str, dark_color: str, reverse_colors: bool = False):
+    def checkerize(self, light_color: str, dark_color: str, reverse_pattern: bool = False):
+
+        if reverse_pattern:
+            light_color, dark_color = dark_color, light_color
+
         def even(x: int):
             return x % 2 == 0
 
@@ -12,13 +17,12 @@ class Board(ButtonGrid):
             return not even(x)
 
         def light_tile(row_ix: int, col_ix: int):
-            r, c = row_ix, col_ix
-            E, O = even, odd
-            return (E(r) and E(c)) or (O(r) and (O(c)))
+            _r, _c = row_ix, col_ix
+            _E, _O = even, odd
+            return (_E(_r) and _E(_c)) or (_O(_r) and (_O(_c)))
 
         for r, row in enumerate(self.get_layout()):
             for c, col in enumerate(row):
-                new_color = ""
                 if light_tile(r, c):
                     new_color = light_color
                 else:
@@ -48,7 +52,6 @@ class Checkerboard(Board):
             self.checkerize(**palettes["board"]["chess"][self.color_palette])
         pf_array = [checkerize_enclosed, ]
         return pf_array
-
 
 
 def main():

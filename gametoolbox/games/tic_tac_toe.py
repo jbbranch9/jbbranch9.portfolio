@@ -1,7 +1,7 @@
 from ..board.board import Board
 from ..gui.game_window import GameWindow
 from ..gui.grid_cell import ButtonCell
-from ..color.palettes import colors
+from ..color.palettes import colors, palettes
 
 
 
