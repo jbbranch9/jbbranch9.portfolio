@@ -24,19 +24,55 @@ colors = {
 
     # NAMED GRAYSCALES
 
-    "black_jet": "#333333",
+    "jet": "#333333",
 
-    "gray_silver": "#cccccc",
-    "gray_timberwolf": "#d4d4d4",
-    "gray_platinum": "#e6e6e6",
+    "silver": "#cccccc",
+    "wolf_gray": "#d4d4d4",
+    "platinum": "#e6e6e6",
+
+    # OFF-WHITES
+
+    "ivory": "#395949",
+    "cream": "#fffdd0",
+    "bone": "#e3dac9",
+
+    # PRIMARY/SECONDARY/TERTIARY COLORS
+
+    "red": "#ff0000",
+    "orange": "#ff8000",
+    "yellow": "#ffff00",
+    "chartreuse": "#80ff00",
+    "green": "#00ff00",
+    "mint": "#00ff80",
+    "cyan": "#00ffff",
+    "azure": "#0080ff",
+    "blue": "#0000ff",
+    "purple": "#8000ff",
+    "magenta": "#ff00ff",
+    "fuchsia": "#ff0080",
+
 
     # NAMED COLORS
 
-    "brown": "#964B00",
+    "ice": "#80ffff",
+    "pink": "#ff80ff",
+    "lemon": "#ff80ff",
+
+    "maroon": "#800000",
+    "forest": "#008000",
+    "navy": "#000080",
+
+
+    "chocolate": "#804000",
+    "indigo": "#400080",
+    "plum": "#804080",
+    "brown": "#964b00",
+    "violet": "#400040",
+    "royal_purple": "#400040",
 
     "green_brunswick": "#395949",
 
-    "yellow_earth": "#E1A95F",
+    "yellow_earth": "#e1a95f",
 }
 
 palettes = {
