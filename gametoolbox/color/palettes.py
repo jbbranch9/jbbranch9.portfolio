@@ -77,7 +77,7 @@ colors = {
 
 palettes = {
     "board": {
-        "chess": {
+        "checker": {
             "black-white": {
                 "light_color": colors["white"],
                 "dark_color": colors["black"],
