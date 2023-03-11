@@ -21,7 +21,7 @@ class TicTacToeBoard(Board):
             num_columns=3,
             constructor_kwargs=constructor_kwargs)
 
-    def get_post_finalization_array(self) -> list:
+    def setup_methods(self) -> list:
         return []
 
 
@@ -30,7 +30,7 @@ class TicTacToeGame:
 
         self.board = TicTacToeBoard()
         layout = [[self.board.get_frame()]]
-        post_final_array = self.board.get_post_finalization_array()
+        post_final_array = self.board.setup_methods()
         self.window = GameWindow(
             layout=layout,
             post_finalization_array=post_final_array,
