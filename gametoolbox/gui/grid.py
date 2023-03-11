@@ -3,9 +3,10 @@ import logging
 from PySimpleGUI import Frame
 
 from .grid_cell import ButtonCell, ImageCell, TextCell
+from ..gui.custom_element import CustomGuiElement
 
 
-class GridBase:
+class GridBase(CustomGuiElement):
 
     _default_dimension = 8
 
@@ -55,14 +56,6 @@ class GridBase:
     def get_frame(self):
         return Frame(title="", layout=self.get_layout(), border_width=0)
 
-    """
-    This is automatically* called after the parent GameWindow calls finalize() or read() for the first time.
-    It is needed because some GUI object methods are unavailable until post-finalization, 
-    and calling each of these methods individually is tedious, and makes the code messy.
-    Override this method in inherited classes, and put all post-finalization method calls inside of it.
-    """
-    def post_finalization(self):
-        pass
 
 
 class CustomGrid(GridBase):

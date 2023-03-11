@@ -13,9 +13,10 @@ And it allows the cells to know their coordinates within the GridBase,
 """
 
 from PySimpleGUI import Button, Image, Text
+from ..gui.custom_element import CustomGuiElement
 
 
-class GridCell:
+class GridCell(CustomGuiElement):
     _default_kwargs = {}
 
     def __init__(self, constructor_type):
