@@ -53,7 +53,6 @@ def main():
 
     with open("test.txt", mode="w", encoding="utf-8") as file:
         file.writelines(mr)
-        file.close()
 
 
 if __name__ == "__main__":

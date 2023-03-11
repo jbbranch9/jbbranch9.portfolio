@@ -19,7 +19,6 @@ def clip_from_file(
 
     with open(filename, "r", encoding='utf-8',) as file:
         lines = file.readlines()
-        file.close()
 
     clipping = [line[x_start:x_end] for line in lines[y_start:y_end]]
     return tuple(clipping)
