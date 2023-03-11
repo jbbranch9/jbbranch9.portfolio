@@ -30,13 +30,6 @@ class Board(ButtonGrid):
                 col.update(button_color=new_color)
         return
 
-    # overload this function in inherited class
-    def get_post_finalization_array(self) -> list:
-        def enclosed_func():
-            pass
-        pf_array = [enclosed_func, ]
-        return pf_array
-
 
 class Checkerboard(Board):
     def __init__(
@@ -47,11 +40,16 @@ class Checkerboard(Board):
         self.color_palette = color_palette
         super().__init__(num_rows=8, num_columns=8, constructor_kwargs=constructor_kwargs)
 
-    def get_post_finalization_array(self) -> list:
+    def setup_methods(self) -> list:
         def checkerize_enclosed():
-            self.checkerize(**palettes["board"]["chess"][self.color_palette])
-        pf_array = [checkerize_enclosed, ]
-        return pf_array
+            self.checkerize(**palettes["board"]["checker"][self.color_palette])
+        post_finalization_methods = [checkerize_enclosed, ]
+        return post_finalization_methods
+
+
+class Chessboard(Checkerboard):
+    def __init__(self):
+        super().__init__(constructor_kwargs=None, color_palette="green-white")
 
 
 def main():
