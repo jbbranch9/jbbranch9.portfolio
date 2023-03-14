@@ -7,9 +7,12 @@ and then by its name within that type, called char_name.
 """
 
 
+from gametoolbox.utility.circular_list import CircularList
+
+
 class MazeCharacter:
 
-    __CHARACTERS = {
+    __UNICODE_CHARACTERS = {
         None: {},
 
         "Vertex": {
@@ -25,7 +28,7 @@ class MazeCharacter:
 
             "all":  "╋",
             "none": "·",
-            None:   "·",
+            None:   "╋",
 
             "blank": " ",
 
@@ -49,6 +52,7 @@ class MazeCharacter:
             .50: "▒▒▒",
             .25: "░░░",
             0.0: "   ",
+            None:"   ",
         },
 
         "Ladder": {
@@ -82,9 +86,11 @@ class MazeCharacter:
     def __init__(self, character_sets: tuple = (None,)):
         self.__CHARACTERS = {}
         for char_set in character_sets:
-            self.__CHARACTERS.update(MazeCharacter.__CHARACTERS[char_set])
+            self.__CHARACTERS.update(MazeCharacter.__UNICODE_CHARACTERS[char_set])
         # The line above ensures that subclasses can only access characters related to that subclass,
         # while allowing all characters to be stored in one location in the code, for human-readability.
+
+        self.character_keys = CircularList(list(self.__CHARACTERS.keys()))
 
         self.__shape = ""
 
@@ -94,7 +100,7 @@ class MazeCharacter:
     def __repr__(self):
         return str(self)
 
-    def set_shape(self, shape: str):  # DO NOT call from MazeCharacter base class, only from inherited classes
+    def set_shape(self, shape: str):  # Note: calling this method from MazeCharacter base class will create errors
         self.__shape = self.lookup_character(shape)
 
     def get_shape(self):
@@ -108,6 +114,7 @@ class MazeCharacter:
 
 class Vertex(MazeCharacter):
     __default_shape = None
+
     def __init__(self, init_shape = None):
         super().__init__(character_sets=("Vertex",))
 
@@ -115,7 +122,6 @@ class Vertex(MazeCharacter):
 
 class Wall(MazeCharacter):
     __default_shape = "closed"
-
 
     def __init__(self, orientation: str):
         assert orientation in ("Horizontal", "Vertical")
@@ -144,17 +150,18 @@ class Vertical(Wall):
     def __init__(self):
         super().__init__(orientation="Vertical")
 
+class Center(MazeCharacter):
+    __default_shape = None
 
+    def __init__(self, init_shape = None):
+        super().__init__(character_sets=("Fill", "Arrow", "Ladder"))
 
+        self.set_shape(self.__default_shape)
 
 
 def main():
-
-    H = Horizontal()
-    print(H, H.can_pass_through())
-    H.gate()
-    print(H, H.can_pass_through())
-
+    C = Center()
+    print(C)
 
 
 if __name__ == "__main__":

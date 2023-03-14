@@ -1,4 +1,4 @@
-from maze_room_sections import \
+from maze_3d_room_sections import \
     RightWall, RightCeilingJoint, RightFloorJoint, \
     LeftWall, LeftCeilingJoint, LeftFloorJoint, \
     Ceiling, CenterWall, Floor
@@ -44,12 +44,15 @@ class MazeRoom(list):
 def main():
     mr = MazeRoom(
         left_state="open",
-        center_state="closed",
-        right_state="closed",
+        center_state="open",
+        right_state="open",
         ceiling_state="open",
         floor_state="open",
     )
 
+    print(list(len(ln) for ln in str(mr).split("\n\n")))
+
+    print(str(mr).replace("\n\n","\n"))
 
     with open("test.txt", mode="w", encoding="utf-8") as file:
         file.writelines(mr)

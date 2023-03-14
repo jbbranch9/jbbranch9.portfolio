@@ -43,7 +43,7 @@ class GridBase(CustomGuiElement):
     Instantiate a new GridBase object instead.
     """
 
-    __ReusedGuiElementException = Exception("This grid's layout and its GUI elements are already in use. "
+    __ReusedGuiElementException = Exception("This character_grid's layout and its GUI elements are already in use. "
                                             "PySimpleGUI does not allow reused elements."
                                             "Instantiate a new GridBase object instead.")
 
