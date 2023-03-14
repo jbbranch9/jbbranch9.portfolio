@@ -4,6 +4,14 @@ These functions MUST return a boolean value.
 """
 
 
+def even(x: int):
+    return x % 2 == 0
+
+
+def odd(x: int):
+    return not even(x)
+
+
 def main():
     pass
 

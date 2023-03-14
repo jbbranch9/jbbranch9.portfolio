@@ -1,9 +1,4 @@
-def even(x: int):
-    return x % 2 == 0
-
-
-def odd(x: int):
-    return not even(x)
+from ..general_logic.assertions import even, odd
 
 
 # returns False if a kwargs dict is missing a required keyword
