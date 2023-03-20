@@ -1,14 +1,18 @@
 import logging
-from gametoolbox.board.board import Checkerboard, Chessboard
+from PySimpleGUI import Button
 from gametoolbox.gui.demo_window import DemoWindow
-from gametoolbox.maze.editor_2d import Maze2dEditor
+from gametoolbox.os.file_handling import base64_string
 
 
 def main():
 
     logging.basicConfig(level=logging.DEBUG)
 
-    m = Maze2dEditor((3,3))
+    img_src = base64_string(filename="assets/jbbranch9.itch.io/token.gif")
+
+    btn = Button(image_source=img_src)
+
+    dw = DemoWindow(btn)
 
 
 

@@ -1,5 +1,5 @@
 from PIL import Image as PIL_Image
-from ..os.file_handling import base64_string
+from gametoolbox.os.file_handling import base64_string
 
 
 class Base64Factory():

@@ -1,7 +1,7 @@
 import base64
 
 
-def base64_string(self, filename: str) -> str:
+def base64_string(filename: str) -> str:
     with open(filename, "rb") as binary_file:
         b64_string = base64.b64encode(binary_file.read())
         binary_file.close()
