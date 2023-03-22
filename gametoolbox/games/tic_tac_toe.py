@@ -1,5 +1,5 @@
 from ..board.board import Board
-from ..gui.game_window import GameWindow
+from ..gui.window import DefaultWindow
 from ..gui.grid_cell import ButtonCell
 from ..color.palettes import colors, palettes
 
@@ -31,7 +31,7 @@ class TicTacToeGame:
         self.board = TicTacToeBoard()
         layout = [[self.board.get_frame()]]
         post_final_array = self.board.setup_methods()
-        self.window = GameWindow(
+        self.window = DefaultWindow(
             layout=layout,
             post_finalization_array=post_final_array,
         )

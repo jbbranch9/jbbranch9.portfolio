@@ -1,10 +1,10 @@
 import logging
 
 from PySimpleGUI import Text, Frame, Button
-from gametoolbox.gui.game_window import GameWindow
+from gametoolbox.gui.window import DefaultWindow
 from gametoolbox.maze.maze_2d import Maze2dGrid
 
-class Maze2dEditor(GameWindow):
+class Maze2dEditor(DefaultWindow):
     __FONT = ("consolas", 14)
 
     def __init__(self, dimensions: tuple[int, int]):
@@ -40,7 +40,7 @@ class Maze2dEditor(GameWindow):
             value=str(self.maze),
         )
 
-    def game_event_loop(self, event, values) -> bool:
+    def event_loop(self, event, values) -> bool:
         repeat_loop = True
         clicked_button = self[event]
         assert isinstance(clicked_button, Button)

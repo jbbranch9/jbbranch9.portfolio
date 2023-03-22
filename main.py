@@ -1,18 +1,13 @@
 import logging
-from PySimpleGUI import Button
-from gametoolbox.gui.demo_window import DemoWindow
-from gametoolbox.os.file_handling import base64_string
+from gametoolbox.tokens import token_button
 
 
 def main():
 
     logging.basicConfig(level=logging.DEBUG)
 
-    img_src = base64_string(filename="assets/jbbranch9.itch.io/token.gif")
+    token_button.main()
 
-    btn = Button(image_source=img_src)
-
-    dw = DemoWindow(btn)
 
 
 

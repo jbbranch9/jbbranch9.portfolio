@@ -19,7 +19,7 @@ def default_window_parameters():
     return
 
 
-class GameWindow(Window):
+class DefaultWindow(Window):
     __EXIT_EVENTS = exit_events()
     __RESTART_EVENTS = restart_events()
 
@@ -53,7 +53,7 @@ class GameWindow(Window):
         self.__window_event_loop()
 
     # DO NOT overload '__window_event_loop'
-    # For gameplay loops, use 'game_event_loop' instead,
+    # For gameplay loops, use 'event_loop' instead,
     # which is called once per '__window_event_loop' cycle.
     def __window_event_loop(self):
         repeat_loop = True
@@ -62,16 +62,16 @@ class GameWindow(Window):
             logging.info(str(event))
             logging.info(str(values))
             
-            if event in GameWindow.__EXIT_EVENTS: 
+            if event in DefaultWindow.__EXIT_EVENTS:
                 break 
             
-            if event in GameWindow.__RESTART_EVENTS:
+            if event in DefaultWindow.__RESTART_EVENTS:
                 self.__restart()
                 break
 
-            # calling 'game_event_loop' returns a bool, which indicates whether
+            # calling 'event_loop' returns a bool, which indicates whether
             # '__window_event_loop' should repeat after this loop
-            repeat_loop = self.game_event_loop(event, values)
+            repeat_loop = self.event_loop(event, values)
 
         self.close()  # This is a redundant failsafe to ensure the window closes.
 
@@ -80,13 +80,13 @@ class GameWindow(Window):
     All overloads of this method MUST return a bool called 'repeat_loop', 
         and SHOULD also assign repeat_loop to True at the top of each loop.
     """
-    def game_event_loop(self, event, values) -> bool:
+    def event_loop(self, event, values) -> bool:
         repeat_loop = True
         return repeat_loop
     
     def __restart(self):
         self.close()
-        return GameWindow()
+        return DefaultWindow()
 
     def __post_finalization(self, post_finalization_array: list):
         for post_final_function in post_finalization_array:
@@ -94,7 +94,7 @@ class GameWindow(Window):
         
 
 def main():
-    demo = GameWindow()
+    demo = DefaultWindow()
     return demo
 
 
