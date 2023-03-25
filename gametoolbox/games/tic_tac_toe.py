@@ -11,7 +11,7 @@ class T3Window(DefaultWindow):
         'no_titlebar': False,
         'grab_anywhere': True,
         'finalize': True,
-        'use_ttk_buttons': True,
+        # 'use_ttk_buttons': True,
     }
 
     def __init__(self, game, *args, **kwargs):
