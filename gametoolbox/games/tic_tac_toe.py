@@ -1,3 +1,4 @@
+import logging
 from PySimpleGUI import Push, popup_auto_close
 from gametoolbox.board.board import Board
 from gametoolbox.gui.window import DefaultWindow, default_font
@@ -12,16 +13,20 @@ class T3Window(DefaultWindow):
         'grab_anywhere': True,
         'finalize': True,
         'font': default_font(),
+        'use_custom_titlebar': True,
+        'titlebar_font': default_font(10),
     }
 
     def __init__(self, game, *args, **kwargs):
         self.game = game
         super().__init__(*args, **kwargs)
 
+    # overload
     def restart(self):
         self.close()
         TicTacToeGame()
 
+    # overload
     def event_loop(self, event, values) -> bool:
         repeat_loop = True
 
@@ -35,7 +40,7 @@ class T3Window(DefaultWindow):
 
         if victory:
             winner = player_name
-            game_over_message = f"game over\n" \
+            game_over_message = f"game over:\n" \
                                 f"  {winner} wins"
             popup_auto_close(
                 game_over_message,
@@ -46,8 +51,8 @@ class T3Window(DefaultWindow):
                 relative_location=(0, -100),
             )
 
-            print(game_over_message)
-            print(*winning_triplets.items(), sep="\n")
+            logging.info(msg=game_over_message)
+            logging.info(msg=f"winning conditions:\n{winning_triplets.items()}")
 
             self.restart()
             repeat_loop = False
@@ -64,8 +69,8 @@ class T3Board(Board):
     }
 
     __diagonals = (
-        ("0:0", "1:1", "2:2",),
-        ("0:2", "1:1", "2:0",),
+        ("0:0", "1:1", "2:2"),
+        ("0:2", "1:1", "2:0")
     )
 
     def __init__(self):
@@ -73,7 +78,7 @@ class T3Board(Board):
         self.__tracker = [
             [" ", " ", " "],
             [" ", " ", " "],
-            [" ", " ", " "],
+            [" ", " ", " "]
         ]
 
         super().__init__(

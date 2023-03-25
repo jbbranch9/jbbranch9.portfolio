@@ -38,6 +38,8 @@ class DefaultWindow(Window):
         'finalize': True,
         'resizable': True,
         'font': default_font(),
+        'use_custom_titlebar': True,
+        'titlebar_font': default_font(10),
     }
     
     def __init__(self, layout: list = None, post_finalization_array: list = None, **window_parameter_kwargs):

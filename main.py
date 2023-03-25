@@ -1,14 +1,11 @@
 import logging
-from gametoolbox.board.board import Checkerboard
-from gametoolbox.gui.window import DefaultWindow
+from gametoolbox.games.tic_tac_toe import TicTacToeGame
 
 def main():
 
     logging.basicConfig(level=logging.DEBUG)
 
-    cb = Checkerboard()
-
-    win = DefaultWindow(layout=cb.get_layout())
+    TicTacToeGame()
 
 
 
