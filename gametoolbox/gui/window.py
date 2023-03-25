@@ -19,6 +19,10 @@ def default_window_parameters():
     return
 
 
+def default_font(size: int = 14):
+    return "consolas", size
+
+
 class DefaultWindow(Window):
     __EXIT_EVENTS = exit_events()
     __RESTART_EVENTS = restart_events()
@@ -33,6 +37,7 @@ class DefaultWindow(Window):
         'grab_anywhere': True,
         'finalize': True,
         'resizable': True,
+        'font': default_font(),
     }
     
     def __init__(self, layout: list = None, post_finalization_array: list = None, **window_parameter_kwargs):
@@ -66,7 +71,7 @@ class DefaultWindow(Window):
                 break 
             
             if event in DefaultWindow.__RESTART_EVENTS:
-                self.__restart()
+                self.restart()
                 break
 
             # calling 'event_loop' returns a bool, which indicates whether
@@ -84,7 +89,7 @@ class DefaultWindow(Window):
         repeat_loop = True
         return repeat_loop
     
-    def __restart(self):
+    def restart(self):
         self.close()
         return DefaultWindow()
 

@@ -1,6 +1,6 @@
 from PySimpleGUI import Push, popup_auto_close
 from gametoolbox.board.board import Board
-from gametoolbox.gui.window import DefaultWindow
+from gametoolbox.gui.window import DefaultWindow, default_font
 from gametoolbox.gui.turn_indicator import TurnIndicator
 from gametoolbox.color.palettes import colors, palettes
 
@@ -11,12 +11,16 @@ class T3Window(DefaultWindow):
         'no_titlebar': False,
         'grab_anywhere': True,
         'finalize': True,
-        # 'use_ttk_buttons': True,
+        'font': default_font(),
     }
 
     def __init__(self, game, *args, **kwargs):
         self.game = game
         super().__init__(*args, **kwargs)
+
+    def restart(self):
+        self.close()
+        TicTacToeGame()
 
     def event_loop(self, event, values) -> bool:
         repeat_loop = True
@@ -31,18 +35,22 @@ class T3Window(DefaultWindow):
 
         if victory:
             winner = player_name
-            game_over_message = f"game over.\n" \
-                                f"winner: {winner}"
+            game_over_message = f"game over\n" \
+                                f"  {winner} wins"
             popup_auto_close(
                 game_over_message,
                 title="game over",
                 modal=True,
                 auto_close=True,
                 auto_close_duration=2,
+                relative_location=(0, -100),
             )
 
             print(game_over_message)
             print(*winning_triplets.items(), sep="\n")
+
+            self.restart()
+            repeat_loop = False
 
         return repeat_loop
 
