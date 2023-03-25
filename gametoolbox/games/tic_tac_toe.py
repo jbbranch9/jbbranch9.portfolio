@@ -178,19 +178,10 @@ class TicTacToeGame:
         self.window = T3Window(
             game=self,
             layout=layout,
-            post_finalization_array=self.get_post_finalization_array(),
         )
 
         self.window.turn_indicator = self.turn_indicator
 
-    # override
-    def get_post_finalization_array(self) -> list:
-        def enclosed_func():
-
-            self.board.checkerize(**palettes["board"]["checker"]["grayscale"])
-        pf_array = [enclosed_func, ]
-
-        return pf_array
 
 
 def main():
