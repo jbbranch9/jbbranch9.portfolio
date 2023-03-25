@@ -1,5 +1,5 @@
-from ..gui.grid import ButtonGrid
-from ..color.palettes import palettes
+from gametoolbox.gui.grid import ButtonGrid, TokenGrid
+from gametoolbox.color.palettes import palettes
 
 
 class Board(ButtonGrid):
@@ -31,7 +31,7 @@ class Board(ButtonGrid):
         return
 
 
-class Checkerboard(Board):
+class Checkerboard(TokenGrid, Board):
     def __init__(
             self,
             constructor_kwargs: dict = None,

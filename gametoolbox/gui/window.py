@@ -35,7 +35,7 @@ class DefaultWindow(Window):
         'resizable': True,
     }
     
-    def __init__(self, post_finalization_array: list = None, layout: list = None, **window_parameter_kwargs):
+    def __init__(self, layout: list = None, post_finalization_array: list = None, **window_parameter_kwargs):
 
         if not window_parameter_kwargs:
             window_parameter_kwargs = self._default_parameters

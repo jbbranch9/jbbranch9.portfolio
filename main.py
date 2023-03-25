@@ -1,12 +1,16 @@
 import logging
-from gametoolbox.tokens import token_button
-
+from gametoolbox.board.board import Checkerboard
+from gametoolbox.gui.window import DefaultWindow
 
 def main():
 
     logging.basicConfig(level=logging.DEBUG)
 
-    token_button.main()
+    cb = Checkerboard()
+
+    win = DefaultWindow(layout=cb.get_layout())
+
+
 
 
 

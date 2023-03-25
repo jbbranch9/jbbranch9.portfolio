@@ -36,7 +36,7 @@ class TurnIndicator(Frame):
             text=self.__left_arrow_character(),
             font=font,
             pad=(5, 0),
-            text_color=self._highlighted_color)
+            text_color=self.highlight_color)
 
         layout = [[self.p1, self.arrow, self.p2]]
 
@@ -53,10 +53,19 @@ class TurnIndicator(Frame):
 
 
     def toggle_arrow(self):
-        if self.arrow.get() is self.__right_arrow_character():
+        if self.arrow.get() == self.__right_arrow_character():
             self.arrow.update(value=self.__left_arrow_character())
+            self.p1.update(text_color=self.highlight_color)
+            self.p2.update(text_color=self.un_highlight_color)
         else:
             self.arrow.update(value=self.__right_arrow_character())
+            self.p1.update(text_color=self.un_highlight_color)
+            self.p2.update(text_color=self.highlight_color)
+
+    def get_player(self):
+        player_sides = [self.__left_arrow_character(), self.__right_arrow_character()]
+        player_names = [self.p1.get(), self.p2.get()]
+        return player_names[player_sides.index(self.arrow.get())]
 
 def main():
     pass

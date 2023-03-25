@@ -86,6 +86,10 @@ palettes = {
                 "light_color": colors["silver"],
                 "dark_color": colors["gray_40"],
                 },
+            "grayscale": {
+                "light_color": colors["silver"],
+                "dark_color": colors["gray_60"],
+                },
             "green-white": {
                 "light_color": colors["wolf_gray"],
                 "dark_color": colors["green_brunswick"],

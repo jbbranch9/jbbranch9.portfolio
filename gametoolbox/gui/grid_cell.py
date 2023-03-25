@@ -13,7 +13,8 @@ And it allows the cells to know their coordinates within the GridBase,
 """
 
 from PySimpleGUI import Button, Image, Text
-from ..gui.custom_element import CustomGuiElement
+from gametoolbox.gui.custom_element import CustomGuiElement
+from gametoolbox.tokens.token_button import Token
 
 
 class GridCell(CustomGuiElement):
@@ -55,8 +56,13 @@ class ButtonCell(GridCell):
         "pad": (0, 0),
     }
 
+    def __init__(self, button_constructor=Button):
+        super().__init__(button_constructor)
+
+
+class TokenCell(ButtonCell):
     def __init__(self):
-        super().__init__(Button)
+        super().__init__(button_constructor=Token)
 
 
 class ImageCell(GridCell):

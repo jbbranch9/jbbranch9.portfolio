@@ -2,7 +2,7 @@ import logging
 
 from PySimpleGUI import Frame
 
-from .grid_cell import ButtonCell, ImageCell, TextCell
+from .grid_cell import ButtonCell, ImageCell, TextCell, TokenCell
 from ..gui.custom_element import CustomGuiElement
 
 
@@ -76,9 +76,12 @@ class ImageGrid(CustomGrid):
     _cell_factory = ImageCell
 
 
-
 class TextGrid(CustomGrid):
     _cell_factory = TextCell
+
+
+class TokenGrid(ButtonGrid):
+    _cell_factory = TokenCell
 
 
 def main():
