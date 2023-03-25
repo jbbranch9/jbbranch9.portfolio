@@ -56,6 +56,11 @@ class GridBase(CustomGuiElement):
     def get_frame(self):
         return Frame(title="", layout=self.get_layout(), border_width=0)
 
+    def get_row_and_column_from_gui_event(self, event: str) -> [int]:
+        split = event.split(":")
+        assert len(split) == 2
+        return [int(coordinate) for coordinate in split]
+
 
 
 class CustomGrid(GridBase):

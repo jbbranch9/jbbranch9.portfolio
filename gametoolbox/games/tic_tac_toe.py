@@ -1,4 +1,4 @@
-from PySimpleGUI import Push
+from PySimpleGUI import Push, popup_auto_close
 from gametoolbox.board.board import Board
 from gametoolbox.gui.window import DefaultWindow
 from gametoolbox.gui.turn_indicator import TurnIndicator
@@ -23,11 +23,26 @@ class T3Window(DefaultWindow):
 
         player_name = self.game.claim(tile=self[event])
 
-        row, col = [int(coordinate) for coordinate in event.split(":")]
+        row, col = self.game.board.get_row_and_column_from_gui_event(event)
 
         self.game.board.mark(row=row, col=col, player=player_name)
 
-        print(self.game.board)
+        victory, winning_triplets = self.game.board.victory()
+
+        if victory:
+            winner = player_name
+            game_over_message = f"game over.\n" \
+                                f"winner: {winner}"
+            popup_auto_close(
+                game_over_message,
+                title="game over",
+                modal=True,
+                auto_close=True,
+                auto_close_duration=2,
+            )
+
+            print(game_over_message)
+            print(*winning_triplets.items(), sep="\n")
 
         return repeat_loop
 
@@ -39,6 +54,11 @@ class T3Board(Board):
         "font": ("consolas", 20),
         "button_color": colors["gray_75"]
     }
+
+    __diagonals = (
+        ("0:0", "1:1", "2:2",),
+        ("0:2", "1:1", "2:0",),
+    )
 
     def __init__(self):
 
@@ -66,6 +86,48 @@ class T3Board(Board):
 
     def mark(self, row: int, col: int, player: str):
         self.__tracker[row][col] = player
+
+    def victory(self):
+
+        is_victory = False
+
+        def match(list_of_three: list):
+            assert len(list_of_three) == 3
+            return list_of_three[0] == list_of_three[1] == list_of_three[2] \
+                and " " not in list_of_three
+
+        winning_triplets = {
+            "rows": [],
+            "diagonals": [],
+            "columns": [],
+        }
+
+        board = self.__tracker
+
+        # check for rows and columns for matches
+        for ix in range(3):
+            row = board[ix]
+            if match(row):
+                winning_triplets["rows"].append(ix)
+                is_victory = True
+            column = [r[ix] for r in board]
+            if match(column):
+                winning_triplets["columns"].append(ix)
+                is_victory = True
+
+        # check diagonals for matches
+        for ix, diagonal_set in enumerate(self.__diagonals):
+            tiles = []
+            for coordinates in diagonal_set:
+                r, c = self.get_row_and_column_from_gui_event(coordinates)
+                tiles.append(board[r][c])
+            if match(tiles):
+                winning_triplets["diagonals"].append(ix)
+                is_victory = True
+
+        return is_victory, winning_triplets
+
+
 
 class TicTacToeGame:
 
