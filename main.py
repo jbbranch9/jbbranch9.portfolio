@@ -1,14 +1,11 @@
 import logging
-from gametoolbox.games.tic_tac_toe import TicTacToeGame
+from gametoolbox.launcher.launcher import LauncherWindow
 
 def main():
 
     logging.basicConfig(level=logging.DEBUG)
 
-    TicTacToeGame()
-
-
-
+    LauncherWindow()
 
 
 
