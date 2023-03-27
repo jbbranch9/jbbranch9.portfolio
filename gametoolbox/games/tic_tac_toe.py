@@ -14,7 +14,7 @@ class T3Window(DefaultWindow):
         'finalize': True,
         'font': default_font(),
         'use_custom_titlebar': True,
-        'titlebar_font': default_font(10),
+        'titlebar_font': default_font(),
     }
 
     def __init__(self, game, *args, **kwargs):
