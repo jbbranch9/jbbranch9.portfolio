@@ -95,6 +95,19 @@ class DefaultWindow(Window):
         self.close()
         return DefaultWindow()
 
+    def iconify(self):
+        root = self.TKroot
+        root.update_idletasks()
+        root.overrideredirect(False)
+        root.iconify()
+
+    def deiconify(self):
+        root = self.TKroot
+        root.update_idletasks()
+        root.overrideredirect(True)
+        root.deiconify()
+
+
     def __post_finalization(self, post_finalization_array: list):
         for post_final_function in post_finalization_array:
             post_final_function()
