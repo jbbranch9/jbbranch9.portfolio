@@ -72,7 +72,9 @@ class LauncherWindow(DefaultWindow):
             selection = None
 
         if selection and event in ("run", "selector_panel"):
+            self.iconify()
             self.run_selection(selection)
+            self.deiconify()
             
         return repeat_loop
 
