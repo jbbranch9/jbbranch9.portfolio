@@ -11,7 +11,7 @@ class SweeperBoard(Board):
         "expert": (16, 30, 99),
         }
     
-    def __init__(self, difficulty_level:str="beginner"):
+    def __init__(self, difficulty_level: str = "beginner"):
 
         num_rows, num_cols, mine_count = self.__difficulties[difficulty_level]
         
@@ -20,12 +20,11 @@ class SweeperBoard(Board):
             num_columns=num_cols,
             )
 
-class SweeperWindow(DefaultWindow):
 
+class SweeperWindow(DefaultWindow):
 
     def event_loop(self, event, values) -> bool:
         repeat_loop = True
-
 
         return repeat_loop
 
