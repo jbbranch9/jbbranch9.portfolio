@@ -28,23 +28,32 @@ Planned games:
 connect-4
 tic-tac-toe
 word search
+2048
+blackout
+peg jump
 
     intermediate:
 chess
 checkers
+reversi
 minesweeper
 mazes
 flippy
 bricklayer
+sliding blocks
+conway's life
 
     hard:
 sudoku
 crossword
 go
 gomoku
+solitaire/card games
+dutho
 
     stretch-goal games:
-tetris (if realtime play supported)
 sokobox
-manok (if non-square grids supported)
 picoperson
+tetris (if realtime play supported)
+snake (if realtime play supported)
+manok (if non-square grids supported)
