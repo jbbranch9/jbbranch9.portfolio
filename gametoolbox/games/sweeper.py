@@ -5,13 +5,14 @@ from gametoolbox.gui.window import DefaultWindow, default_font
 
 class SweeperBoard(Board):
 
+    # (num_rows, num_cols, mine_count)
     __difficulties = {
         "beginner": (9, 9, 10),
         "intermediate": (16, 16, 40),
         "expert": (16, 30, 99),
         }
     
-    def __init__(self, difficulty_level: str = "beginner"):
+    def __init__(self, difficulty_level: str = "expert"):
 
         num_rows, num_cols, mine_count = self.__difficulties[difficulty_level]
         
