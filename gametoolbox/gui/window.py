@@ -41,6 +41,10 @@ class DefaultWindow(Window):
         'use_custom_titlebar': True,
         'titlebar_font': default_font(10),
     }
+
+    def merge_window_parameters_into_default_parameters(self, update_parameters: dict):
+        self._default_parameters = DefaultWindow._default_parameters
+        self._default_parameters.update(update_parameters)
     
     def __init__(self, layout: list = None, post_finalization_array: list = None, **window_parameter_kwargs):
 
