@@ -2,8 +2,8 @@ import logging
 
 from PySimpleGUI import Frame
 
-from .grid_cell import ButtonCell, ImageCell, TextCell, TokenCell
-from ..gui.custom_element import CustomGuiElement
+from gametoolbox.gui.grid_cell import ButtonCell, ImageCell, TextCell, TokenCell
+from gametoolbox.gui.custom_element import CustomGuiElement
 
 
 class GridBase(CustomGuiElement):
@@ -60,6 +60,16 @@ class GridBase(CustomGuiElement):
         split = event.split(":")
         assert len(split) == 2
         return [int(coordinate) for coordinate in split]
+
+    def get_cell(self, row:int, column:int):
+        return self.__layout[row][column]
+
+    def get_cell_from_gui_event(self, event: str):
+        row, column = self.get_row_and_column_from_gui_event(event)
+        return self.get_cell(row, column)
+
+    def get_dimensions(self):
+        return len(self.__layout), len(self.__layout[0])
 
 
 
