@@ -6,7 +6,7 @@ from gametoolbox.color.palettes import palettes
 from gametoolbox.logic.game_logic.neighbor import get_neighbor_set
 
 class BlackoutButton(Button):
-    __palette = palettes["board"]["checker"]["green-white"]
+    __palette = palettes["board"]["checker"]["blackout"]
 
     __on_color = __palette["light_color"]
     __off_color = __palette["dark_color"]
