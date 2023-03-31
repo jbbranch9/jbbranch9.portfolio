@@ -5,6 +5,7 @@ from gametoolbox.gui.grid_cell import ButtonCell
 from gametoolbox.color.palettes import palettes
 from gametoolbox.logic.game_logic.neighbor import get_neighbor_set
 
+
 class BlackoutButton(Button):
     __palette = palettes["board"]["checker"]["blackout"]
 
@@ -36,9 +37,14 @@ class BlackoutCell(ButtonCell):
         )
 
 
-
 class BlackoutBoard(CustomGrid):
     _cell_factory = BlackoutCell
+
+    def __init__(self):
+        super().__init__(
+            num_rows=9,
+            num_columns=9,
+        )
 
 
 class BlackoutGame(DefaultWindow):
