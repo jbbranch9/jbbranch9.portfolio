@@ -56,7 +56,7 @@ colors = {
 
     "ice": "#80ffff",
     "pink": "#ff80ff",
-    "lemon": "#ff80ff",
+    "lemon": "#ffff80",
 
     "maroon": "#800000",
     "forest": "#008000",
@@ -78,6 +78,10 @@ colors = {
 palettes = {
     "board": {
         "checker": {
+            "blackout": {
+                "light_color": colors["lemon"],
+                "dark_color": colors["jet"],
+                },
             "black-white": {
                 "light_color": colors["white"],
                 "dark_color": colors["black"],
