@@ -1,4 +1,4 @@
-from gametoolbox.os.file_handling import clip_from_file
+from gametoolbox.os.file_handling import clip_from_text_file
 
 
 class MazeRoomSection(list):
@@ -19,7 +19,7 @@ class MazeRoomSection(list):
         x_min, x_max = horizontal_range
         y_min, y_max = vertical_range
 
-        clip = clip_from_file(
+        clip = clip_from_text_file(
             filename=filename,
             x_start=x_min,
             x_end=x_max,
