@@ -8,15 +8,11 @@ from PySimpleGUI import Window, WIN_CLOSED
 
 
 def exit_events():
-    return WIN_CLOSED, 'Exit', 'exit', 'EXIT', 'Escape:27', 'F5:116'
+    return WIN_CLOSED, 'Exit', 'exit', 'EXIT', 'Escape:27', 'F5:116', ':exit:'
 
 
 def restart_events():
-    return 'Restart', 'restart', 'RESTART', 'F2:113'
-
-
-def default_window_parameters():
-    return
+    return 'Restart', 'restart', 'RESTART', 'F2:113', ':restart:'
 
 
 def default_font(size: int = 14):
@@ -59,8 +55,7 @@ class DefaultWindow(Window):
             )
 
         self.finalize()
-        if post_finalization_array:
-            self.__post_finalization(post_finalization_array)
+        self.__post_finalization(post_finalization_array)
         self.__window_event_loop()
 
     # DO NOT overload '__window_event_loop'
@@ -70,8 +65,8 @@ class DefaultWindow(Window):
         repeat_loop = True
         while repeat_loop:
             event, values = self.read()
-            logging.info(str(event))
-            logging.info(str(values))
+            logging.info(f"\n  event:\n    {event}")
+            logging.info(f"\n  values:\n    {values}")
             
             if event in DefaultWindow.__EXIT_EVENTS:
                 break 
@@ -111,10 +106,20 @@ class DefaultWindow(Window):
         root.overrideredirect(True)
         root.deiconify()
 
+    def __post_finalization(self, post_finalization_array: list = None):
+        if post_finalization_array:
+            for post_final_function in post_finalization_array:
+                post_final_function()
 
-    def __post_finalization(self, post_finalization_array: list):
-        for post_final_function in post_finalization_array:
-            post_final_function()
+        self.bind_hotkeys()
+
+    def bind_hotkeys(self):
+        self.bind("<Control-p>", ":print:")
+        self.bind("<Control-s>", ":save:")
+        self.bind("<Control-o>", ":open:")
+        self.bind("<Control-w>", ":exit:")
+        self.bind("<Control-r>", ":restart:")
+
         
 
 def main():
@@ -124,4 +129,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    print('done')
