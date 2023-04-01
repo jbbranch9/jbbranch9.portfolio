@@ -2,6 +2,7 @@ from PySimpleGUI import Button, Listbox, LISTBOX_SELECT_MODE_SINGLE, Push, Popup
 from gametoolbox.gui.window import DefaultWindow, default_font
 from gametoolbox.games.tic_tac_toe import TicTacToeGame
 from gametoolbox.games.sweeper import SweeperGame
+from gametoolbox.games.blackout import BlackoutGame
 
 
 class LauncherWindow(DefaultWindow):
@@ -12,18 +13,22 @@ class LauncherWindow(DefaultWindow):
         auto_close_duration=2,
         )
 
-    __launch_functions = {
+    launch_functions = {
         "tic-tac-toe": TicTacToeGame,
         "sweeper": SweeperGame,
+        "blackout": BlackoutGame,
         "connect-4": __dummy_function,
         "reversi": __dummy_function,
         "checkers": __dummy_function,
         "chess": __dummy_function,
         }
     
-    def __init__(self):
+    def __init__(self, launch_functions: dict = None):
+        if launch_functions is None:
+            launch_functions = LauncherWindow.launch_functions
+        self.launch_functions = launch_functions
 
-        vals = list(self.__launch_functions.keys())
+        vals = list(self.launch_functions.keys())
 
         selector_panel = Listbox(
             values=vals,
@@ -32,7 +37,7 @@ class LauncherWindow(DefaultWindow):
             size=(15, 10),
             font=default_font(),
             key="selector_panel",
-            expand_x= True,
+            expand_x=True,
             bind_return_key=True,
             )
 
@@ -55,7 +60,7 @@ class LauncherWindow(DefaultWindow):
         
         super().__init__(
             layout=layout,
-            title= "demo games",
+            title="demo games",
             font=default_font(),
             use_custom_titlebar= True,
             titlebar_font=default_font(),
@@ -85,8 +90,16 @@ class LauncherWindow(DefaultWindow):
 
 
     def run_selection(self, selection:str):
-        self.__launch_functions[selection]()
+        self.launch_functions[selection]()
 
+
+class LevelLauncher(LauncherWindow):
+    def __init__(self):
+        super().__init__(
+            launch_functions={
+                "level_1": lambda: None,
+            }
+        )
 
 
 def main():
