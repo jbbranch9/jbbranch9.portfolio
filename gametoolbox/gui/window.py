@@ -1,5 +1,5 @@
 """
-This is the parent class for all game windows.
+DefaultWindow is the parent class for all game windows.
 
 """
 
