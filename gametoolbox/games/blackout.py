@@ -4,6 +4,7 @@ from gametoolbox.gui.grid import CustomGrid
 from gametoolbox.gui.grid_cell import ButtonCell
 from gametoolbox.color.palettes import palettes
 from gametoolbox.logic.game_logic.neighbor import get_neighbor_set
+from gametoolbox.os.file_handling import save_level
 
 
 class BlackoutButton(Button):
@@ -46,6 +47,26 @@ class BlackoutBoard(CustomGrid):
             num_columns=9,
         )
 
+    def save(self, level_name: str = "test") -> bool:
+        return save_level(
+            data="test.",
+            level_name=level_name,
+            folder_name="blackout",
+        )
+
+    def __str__(self):
+        output = ""
+        layout = self.get_layout()
+        for row in layout:
+            for column in row:
+                if column.on:
+                    output += "O"
+                else:
+                    output += "X"
+            if not row == layout[-1]:
+                output += "\n"
+        return output
+
 
 class BlackoutGame(DefaultWindow):
 
@@ -59,9 +80,21 @@ class BlackoutGame(DefaultWindow):
     def event_loop(self, event, values) -> bool:
         repeat_loop = True
 
+        if event == ":print:":
+            print()
+            print(str(self.board))
+            print()
+
+        if event == ":save:":
+            save_level(
+                data=str(self.board),
+                level_name="test",
+                folder_name="blackout",
+            )
+
         try:
             cell = self.board.get_cell_from_gui_event(event)
-        except ValueError:
+        except (ValueError, AssertionError):
             cell = None
 
         if cell:
@@ -78,6 +111,7 @@ class BlackoutGame(DefaultWindow):
 
             if n_row in range(0, height) and n_column in range(0, width):
                 self.board.get_cell(n_row, n_column).toggle()
+
 
 def main():
     BlackoutGame()
