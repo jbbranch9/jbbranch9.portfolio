@@ -1,11 +1,12 @@
 import logging
-from gametoolbox.launcher.launcher import LauncherWindow
+from gametoolbox.launcher.launcher import LauncherWindow, LevelLauncher
 
 def main():
 
     logging.basicConfig(level=logging.DEBUG)
 
     LauncherWindow()
+    # LevelLauncher()
 
 
 
