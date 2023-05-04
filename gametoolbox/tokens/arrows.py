@@ -22,14 +22,17 @@ def arrow(direction: str, weight: int = 2) -> str:
         'HEAVY',
         'VERY HEAVY',
         )
-    
-    assert weight in range(len(weights))
-    assert direction in directions.keys()
 
-    if weight == 0:
-        return " "
-    elif direction is None:
+    weight_range = range(len(weights))
+    valid_directions = directions.keys()
+    
+    assert weight in weight_range
+    assert direction in valid_directions
+
+    if direction is None:
         return unicodedata.lookup("MIDDLE DOT")
+    elif weight == 0:
+        return " "
     else:
         return unicodedata.lookup(f"WIDE-HEADED {directions[direction]} {weights[weight]} BARB ARROW".replace("  "," "))
 
