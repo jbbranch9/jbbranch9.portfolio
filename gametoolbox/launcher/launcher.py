@@ -11,6 +11,7 @@ class LauncherWindow(DefaultWindow):
         "This game is not finished.\n¯\_(ツ)_/¯\nPlease check back later.",
         font=default_font(),
         auto_close_duration=2,
+        keep_on_top=True,
         )
 
     launch_functions = {

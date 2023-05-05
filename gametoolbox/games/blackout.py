@@ -1,4 +1,4 @@
-from PySimpleGUI import Button
+from PySimpleGUI import Button, Menu
 from gametoolbox.gui.window import DefaultWindow
 from gametoolbox.gui.grid import CustomGrid
 from gametoolbox.gui.grid_cell import ButtonCell
@@ -71,21 +71,31 @@ class BlackoutBoard(CustomGrid):
 class BlackoutGame(DefaultWindow):
 
     def __init__(self):
+        menu = self.build_menu()
         self.board = BlackoutBoard()
-        layout = [[self.board.get_frame()]]
+        layout = [
+            [menu],
+            [self.board.get_frame()],
+        ]
         super().__init__(
             layout=layout,
         )
 
+    def build_menu(self):
+        menu_def = [
+            ['&Game', ['&Open:::open:', '&Save:::save::print:', '&Print:::print:', 'E&xit']],
+        ]
+        return Menu(menu_def)
+
     def event_loop(self, event, values) -> bool:
         repeat_loop = True
 
-        if event == ":print:":
+        if ":print:" in event:
             print()
             print(str(self.board))
             print()
 
-        if event == ":save:":
+        if ":save:" in event:
             save_level(
                 data=str(self.board),
                 level_name="test",

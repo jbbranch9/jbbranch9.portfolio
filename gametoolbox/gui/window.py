@@ -118,7 +118,9 @@ class DefaultWindow(Window):
         self.bind("<Control-s>", ":save:")
         self.bind("<Control-o>", ":open:")
         self.bind("<Control-w>", ":exit:")
-        self.bind("<Control-r>", ":restart:")
+        self.bind("<Control-r>", ":restart:")  # use this to restart the entire window
+        self.bind("<Control-l>", ":reload:")   # use this to reload a level within the original window
+        self.bind("<Control-`>", ":debug:")
 
         
 
