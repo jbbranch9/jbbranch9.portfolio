@@ -4,6 +4,7 @@ from gametoolbox.color.palettes import palettes
 
 class Board(ButtonGrid):
 
+
     # recolors buttons into a checkerboard pattern
     def checkerize(self, light_color: str, dark_color: str, reverse_pattern: bool = False):
 

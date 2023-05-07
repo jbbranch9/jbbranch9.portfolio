@@ -71,6 +71,12 @@ class GridBase(CustomGuiElement):
     def get_dimensions(self):
         return len(self.__layout), len(self.__layout[0])
 
+    def __list__(self):
+        output = []
+        for row in self.__layout:
+            for col in row:
+                output.append(col)
+        return output
 
 
 class CustomGrid(GridBase):
