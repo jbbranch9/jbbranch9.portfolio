@@ -1,4 +1,4 @@
-from PySimpleGUI import Button, Menu
+from PySimpleGUI import Button, Menu, popup_get_text
 from gametoolbox.gui.window import DefaultWindow
 from gametoolbox.gui.grid import CustomGrid
 from gametoolbox.gui.grid_cell import ButtonCell
@@ -96,10 +96,14 @@ class BlackoutGame(DefaultWindow):
             print()
 
         if ":save:" in event:
+            level_name = popup_get_text(
+                message="level name:",
+                title="save level",
+            )
             save_level(
                 data=str(self.board),
-                level_name="test",
-                folder_name="blackout",
+                level_name=level_name,
+                game_name="blackout",
             )
 
         try:

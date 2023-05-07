@@ -17,15 +17,11 @@ def safe_write(
         return False
 
 
-def save(*args, **kwargs) -> bool:
-    return safe_write(*args, **kwargs)
-
-
 def save_level(
         data: str,
         level_name: str,
-        folder_name: str) -> bool:
-    return save(data=data, file_name=level_name, folder_name=f"levels/{folder_name}", file_extension="lvl")
+        game_name: str) -> bool:
+    return safe_write(data=data, directory=f"gametoolbox/save_data/levels/{game_name}", file_name=level_name, file_extension="lvl")
 
 
 def base64_string(filename: str) -> str:
