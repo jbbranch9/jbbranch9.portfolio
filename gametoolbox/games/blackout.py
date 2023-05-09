@@ -72,11 +72,12 @@ class BlackoutBoard(CustomGrid):
             game_name="blackout",
         )
 
-    def load(self):
-        level_name = popup_get_text(
-            message="level name:",
-            title="load level",
-        )
+    def load(self, level_name: str = None):
+        if level_name is None:
+            level_name = popup_get_text(
+                message="level name:",
+                title="load level",
+            )
         level_data = load_level(
             game_name="blackout",
             level_name=level_name
@@ -91,7 +92,6 @@ class BlackoutBoard(CustomGrid):
                     cell.turn_on()
                 else:
                     cell.turn_off()
-
 
     def __str__(self):
         output = ""
@@ -112,12 +112,14 @@ class BlackoutGame(DefaultWindow):
     def __init__(self):
         menu = self.build_menu()
         self.board = BlackoutBoard()
+        self.turn_count = 0
         layout = [
             [menu],
             [self.board.get_frame()],
         ]
         super().__init__(
             layout=layout,
+            post_finalization_array=[self.preload_level_1(), ]
         )
 
     def build_menu(self):
@@ -160,6 +162,10 @@ class BlackoutGame(DefaultWindow):
             if n_row in range(0, height) and n_column in range(0, width):
                 self.board.get_cell(n_row, n_column).toggle()
 
+    def preload_level_1(self):
+        def preload():
+            return self.board.load(level_name="1")
+        return preload
 
 def main():
     BlackoutGame()
