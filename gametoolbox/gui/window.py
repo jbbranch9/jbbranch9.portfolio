@@ -116,10 +116,11 @@ class DefaultWindow(Window):
     def bind_hotkeys(self):
         self.bind("<Control-p>", ":print:")
         self.bind("<Control-s>", ":save:")
-        self.bind("<Control-o>", ":open:")
+        self.bind("<Control-o>", ":load:")
+        self.bind("<Control-l>", ":load:")
         self.bind("<Control-w>", ":exit:")
-        self.bind("<Control-r>", ":restart:")  # use this to restart the entire window
-        self.bind("<Control-l>", ":reload:")   # use this to reload a level within the original window
+        self.bind("<Control-n>", ":restart:")  # use this to restart the entire window
+        self.bind("<Control-r>", ":reload:")   # use this to reload a level within the original window
         self.bind("<Control-`>", ":debug:")
 
         

@@ -4,7 +4,7 @@ from gametoolbox.gui.grid import CustomGrid
 from gametoolbox.gui.grid_cell import ButtonCell
 from gametoolbox.color.palettes import palettes
 from gametoolbox.logic.game_logic.neighbor import get_neighbor_set
-from gametoolbox.os.file_handling import save_level
+from gametoolbox.os.file_handling import save_level, load_level
 
 
 class BlackoutButton(Button):
@@ -29,6 +29,18 @@ class BlackoutButton(Button):
         )
         return self.on
 
+    def turn_on(self):
+        self.update(
+            button_color=self.__on_color
+        )
+        self.on = True
+
+    def turn_off(self):
+        self.update(
+            button_color=self.__off_color
+        )
+        self.on = False
+
 
 class BlackoutCell(ButtonCell):
 
@@ -40,6 +52,8 @@ class BlackoutCell(ButtonCell):
 
 class BlackoutBoard(CustomGrid):
     _cell_factory = BlackoutCell
+    ON = "O"
+    OFF = "X"
 
     def __init__(self):
         super().__init__(
@@ -47,12 +61,37 @@ class BlackoutBoard(CustomGrid):
             num_columns=9,
         )
 
-    def save(self, level_name: str = "test") -> bool:
-        return save_level(
-            data="test.",
-            level_name=level_name,
-            folder_name="blackout",
+    def save(self) -> bool:
+        level_name = popup_get_text(
+            message="level name:",
+            title="save level",
         )
+        return save_level(
+            data=str(self),
+            level_name=level_name,
+            game_name="blackout",
+        )
+
+    def load(self):
+        level_name = popup_get_text(
+            message="level name:",
+            title="load level",
+        )
+        level_data = load_level(
+            game_name="blackout",
+            level_name=level_name
+        )
+
+        level_data = level_data.split("\n")
+
+        for row_ix, row in enumerate(level_data):
+            for col_ix, col in enumerate(row):
+                cell = self.get_cell(row=row_ix, column=col_ix)
+                if col == self.ON:
+                    cell.turn_on()
+                else:
+                    cell.turn_off()
+
 
     def __str__(self):
         output = ""
@@ -60,9 +99,9 @@ class BlackoutBoard(CustomGrid):
         for row in layout:
             for column in row:
                 if column.on:
-                    output += "O"
+                    output += self.ON
                 else:
-                    output += "X"
+                    output += self.OFF
             if not row == layout[-1]:
                 output += "\n"
         return output
@@ -83,7 +122,7 @@ class BlackoutGame(DefaultWindow):
 
     def build_menu(self):
         menu_def = [
-            ['&Game', ['&Open:::open:', '&Save:::save::print:', '&Print:::print:', 'E&xit']],
+            ['&Game', ['&Open:::load:', '&Save:::save::print:', '&Print:::print:', 'E&xit']],
         ]
         return Menu(menu_def)
 
@@ -96,15 +135,10 @@ class BlackoutGame(DefaultWindow):
             print()
 
         if ":save:" in event:
-            level_name = popup_get_text(
-                message="level name:",
-                title="save level",
-            )
-            save_level(
-                data=str(self.board),
-                level_name=level_name,
-                game_name="blackout",
-            )
+            self.board.save()
+
+        if ":load:" in event:
+            self.board.load()
 
         try:
             cell = self.board.get_cell_from_gui_event(event)

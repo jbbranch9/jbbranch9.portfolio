@@ -61,7 +61,7 @@ class GridBase(CustomGuiElement):
         assert len(split) == 2
         return [int(coordinate) for coordinate in split]
 
-    def get_cell(self, row:int, column:int):
+    def get_cell(self, row: int, column: int):
         return self.__layout[row][column]
 
     def get_cell_from_gui_event(self, event: str):
