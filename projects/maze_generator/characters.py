@@ -11,6 +11,8 @@ class MazeCharacter:
         },
 
         "Vertex": {
+
+            # (up, right, down, left)
             
             (0, 0, 0, 0): "·",
             
