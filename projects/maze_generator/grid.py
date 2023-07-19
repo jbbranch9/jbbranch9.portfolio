@@ -103,6 +103,20 @@ class MazeGrid:
         if left_wall is not None:
             self.update_wall(x-0.5, y, close=left_wall)
 
+    def close_outer_walls(self):
+        x_min = self.x_range[0]
+        x_max = self.x_range[-1]
+        y_min = self.y_range[0]
+        y_max = self.y_range[-1]
+        
+        print(x_min, x_max)
+        
+        for key in self.all_walls.keys():
+            x, y = key
+            if x == x_min or x == x_max or y == y_min or y == y_max:
+                self.update_wall(x, y, True)
+                
+                
         
 
     def __str__(self):
@@ -113,15 +127,16 @@ class MazeGrid:
             output += "\n"
         return output
 
-    def publish(self, filename="maze.txt", encoding='utf_8'):
-        with open(filename, 'w') as file:
+    def publish(self, filename="maze.txt"):
+        with open(filename, 'w', encoding='utf-8') as file:
             file.write(str(self))
             file.close
         
 
 def main():
-    mz = MazeGrid(9,5)
-    mz.update_cell(1, 1, up_wall=True)
+    mz = MazeGrid(5, 5)
+    mz.close_outer_walls()
+    mz.update_cell(1,1, left_wall=False, right_wall=True, down_wall=True)
     print(str(mz))
     print()
     mz.publish()
