@@ -3,11 +3,14 @@ from characters import Horizontal
 from characters import Vertical
 from characters import Center
 
+
 class MazeGrid:
     def __init__(self, number_of_columns: int, number_of_rows: int):
+        
+        self.grid_dimensions = (number_of_columns, number_of_rows)
 
-        self.all_cells = {}
-        self.centers = {}
+        self.all_characters = {}
+        self.cells = {}
         self.horizontals = {}
         self.verticals = {}
         self.all_walls = {}
@@ -20,28 +23,32 @@ class MazeGrid:
             for y in self.y_range:
 
                 if x.is_integer() and y.is_integer():
-                    cell_constructor = Center
-                    cell_category = self.centers
+                    character_constructor = Center
+                    character_category = self.cells
 
                 elif x.is_integer() ^ y.is_integer():
                     if x.is_integer():
-                        cell_constructor = Horizontal
-                        cell_category = self.horizontals
+                        character_constructor = Horizontal
+                        character_category = self.horizontals
                     else:
-                        cell_constructor = Vertical
-                        cell_category = self.verticals
+                        character_constructor = Vertical
+                        character_category = self.verticals
 
                 else:
-                    cell_constructor = Vertex
-                    cell_category = self.vertices
+                    character_constructor = Vertex
+                    character_category = self.vertices
 
-                cell = cell_constructor()
-                cell_category.update({(x,y): cell})
+                character = character_constructor()
+                character.x, character.y = x, y
+                character_category.update({(x,y): character})
                 
-                self.all_cells.update({(x,y): cell})
-                if cell_category in (self.horizontals, self.verticals):
-                    self.all_walls.update({(x,y): cell})
+                self.all_characters.update({(x,y): character})
+                if character_category in (self.horizontals, self.verticals):
+                    self.all_walls.update({(x,y): character})
 
+    def get(self, x, y):
+        x, y = float(x), float(y)
+        return self.all_characters[(x, y)]
 
     def update_wall(self, x: float, y:float, close:bool):
         assert (x, y) in self.all_walls.keys()
@@ -82,14 +89,14 @@ class MazeGrid:
                     fill: float = None,
                     change_fill_type:str = None):
         
-        assert (x, y) in self.centers.keys()
+        assert (x, y) in self.cells.keys()
 
-        center = self.centers[(x, y)]
+        cell = self.cells[(x, y)]
 
         if change_fill_type is not None:
-            assert change_fill_type in center.valid_character_sets_for_type
+            assert change_fill_type in cell.valid_character_sets_for_type
         
-        center.set_shape(char_name=fill, char_type=change_fill_type)
+        cell.set_shape(char_name=fill, char_type=change_fill_type)
 
         if up_wall is not None:
             self.update_wall(x, y-0.5, close=up_wall)
@@ -109,21 +116,22 @@ class MazeGrid:
         y_min = self.y_range[0]
         y_max = self.y_range[-1]
         
-        print(x_min, x_max)
-        
         for key in self.all_walls.keys():
             x, y = key
             if x == x_min or x == x_max or y == y_min or y == y_max:
                 self.update_wall(x, y, True)
                 
-                
+
+    def close_all_walls(self):
+        for x, y in self.all_walls.keys():
+            self.update_wall(x, y, True)
         
 
     def __str__(self):
         output = ""
         for y in self.y_range:
             for x in self.x_range:
-                output += str(self.all_cells[(x,y)])
+                output += str(self.all_characters[(x,y)])
             output += "\n"
         return output
 
@@ -131,15 +139,31 @@ class MazeGrid:
         with open(filename, 'w', encoding='utf-8') as file:
             file.write(str(self))
             file.close
+            
+    def get_neighbors(self, x, y):
+        x, y = float(x), float(y)
+        up = (x, y-1)
+        right = (x+1, y)
+        down = (x, y+1)
+        left = (x-1, y)
+        
+        cardinals = []
+        for neighbor in (up, right, down, left):
+            try:
+                nx, ny = neighbor
+                cardinals.append(self.get(nx, ny))
+            except KeyError:
+                pass
+            
+        return cardinals
         
 
 def main():
-    mz = MazeGrid(5, 5)
-    mz.close_outer_walls()
-    mz.update_cell(1,1, left_wall=False, right_wall=True, down_wall=True)
-    print(str(mz))
-    print()
-    mz.publish()
+    mz = MazeGrid(16, 8)
+    for c in mz.get_neighbors(8,6):
+        mz.update_cell(c.x, c.y, fill=1.0)
+        
+    print(mz)
 
 if __name__ == "__main__":
     main()
