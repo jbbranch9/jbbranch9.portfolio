@@ -42,12 +42,14 @@ class MazeCharacter:
         "Horizontal": {
             "closed": "━━━",
             "opened": "   ",
+            "breadcrumb": " · ",
             None: "   ",
         },
 
         "Vertical": {
             "closed": "┃",
             "opened": " ",
+            "breadcrumb": "·",
             None: " ",
         },
 
@@ -57,6 +59,10 @@ class MazeCharacter:
             .50: "▒▒▒",
             .25: "░░░",
             0.0: "   ",
+            "breadcrumb_N_S": " · ",
+            "breadcrumb_W": "·· ",
+            "breadcrumb_E": " ··",
+            "breadcrumb_W_E": "···",
             None:"   ",
         },
 
@@ -111,6 +117,7 @@ class MazeCharacter:
         self.__character_type = None
         self.__character_name = None
         self.__shape = None
+        self.x, self.y = None, None
 
         self.set_shape(char_name, char_type)
 
@@ -118,7 +125,7 @@ class MazeCharacter:
         return str(self.__shape)
 
     def __repr__(self):
-        return str(self)
+        return str((self.x, self.y))
 
     def set_shape(self, char_name: str, char_type: str = None):
 
